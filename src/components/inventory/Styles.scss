@@ -1,0 +1,13 @@
+.inventory {
+  display: inline-block;
+
+  &__title {
+    text-align: center;
+  }
+
+  &__buttonWrapper {
+    display: flex;
+    justify-content: center;
+    margin: 50px 0;
+  }
+}

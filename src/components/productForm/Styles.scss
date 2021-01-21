@@ -1,0 +1,19 @@
+.productForm {
+
+  &__innerContainer {
+  display: flex;
+  margin: 3em 0;
+  }
+
+  &__image {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+
+  &__imageFields {
+    width: 50%;
+    margin: 0 auto;
+  }
+}

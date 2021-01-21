@@ -1,0 +1,9 @@
+.loginForm {
+  background-image: linear-gradient(#0000002a, #0000007a), url("../../assets/artem-beliaikin-N35J0N8ZglQ-unsplash.jpg") !important;
+  background-position: center !important;
+  background-size: cover !important;
+
+  &__header {
+    color: #ffffff !important;
+  }
+}

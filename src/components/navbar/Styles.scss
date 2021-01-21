@@ -1,0 +1,17 @@
+.navbar {
+  &__multifunctionBtn {
+    margin-left: 1em!important;
+  }
+}
+
+.inactiveUser {
+  position: absolute!important;
+  left: 150px!important;
+  z-index: 100!important;
+}
+
+.activeUser {
+  position: none;
+  left: 0;
+  z-index: 0;
+}
