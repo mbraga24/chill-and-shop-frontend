@@ -3,11 +3,11 @@ import { useDispatch } from 'react-redux';
 import { Container, Image, Form, Button, Card, Placeholder } from 'semantic-ui-react'
 import useFormFields from '../../hooks/useFormFields';
 
-import { ADD_PRODUCT } from '../../store/type';
+import { ADD_PRODUCT, SET_BANNER } from '../../store/type';
 import { newProduct, updateProduct } from '../../api';
 import './Styles.scss';
 
-const ProductForm = ({ formNumber, click = null, showAction, product = null }) => {
+const ProductForm = ({ formNumber, click = null, showAction, product = null, handleBanner }) => {
 
   let disableName;
   const dispatch = useDispatch()
@@ -16,7 +16,7 @@ const ProductForm = ({ formNumber, click = null, showAction, product = null }) =
   const [ file, setFile ] = useState(null)
   const [ fileName, setFileName ] = useState("")
   const [ fields, handleFieldChange ] = useFormFields({
-    name: showAction ? "" : product.name,
+    title: showAction ? "" : product.title,
     price: showAction ? "" : product.price,
     quantity: showAction ? "" : product.quantity,
   })
@@ -49,7 +49,7 @@ const ProductForm = ({ formNumber, click = null, showAction, product = null }) =
 
     formData.append("file", file);
     formData.append("fileName", fileName)
-    formData.append("name", fields.name)
+    formData.append("title", fields.title)
     formData.append("price", fields.price)
     formData.append("quantity", parseInt(fields.quantity))
     
@@ -57,8 +57,10 @@ const ProductForm = ({ formNumber, click = null, showAction, product = null }) =
     if (showAction) {
       newProduct(formData, localStorage.token)
       .then(data => {
-        const { product } = data
+        const { product, confirmation } = data
+        handleBanner()
         dispatch({ type: ADD_PRODUCT, payload: product })
+        dispatch({ type: SET_BANNER, payload: confirmation });
         setImageLoader(false)
       })
     } else {
@@ -114,12 +116,12 @@ const ProductForm = ({ formNumber, click = null, showAction, product = null }) =
               value={fileName}
               />
               <Form.Input
-              name="name"
+              name="title"
               fluid
-              label="Product Name"
+              label="Product title"
               placeholder="Leather Shoes"
               onChange={handleFieldChange}
-              defaultValue={showAction ? "" : fields.name}
+              defaultValue={showAction ? "" : fields.title}
               />
             <Form.Group widths='equal'>
               <Form.Input 
