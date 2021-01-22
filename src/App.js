@@ -11,7 +11,7 @@ import Navbar from './components/navbar/Navbar';
 import Dashboard from './components/dashboard/Dashboard';
 import 'semantic-ui-css/semantic.min.css'
 
-import { LOGGED_IN, SET_ORDERS, SET_PRODUCTS } from './store/type';
+import { LOGGED_IN, SET_ORDERS, SET_PRODUCTS, SET_BANNER } from './store/type';
 import { autologin, getProducts, getOrders } from './api'
 import { Header, Message, List } from 'semantic-ui-react';
 import './styles/App.scss';
@@ -96,8 +96,10 @@ const App = () => {
   }
 
   const handleBanner = () => {
+    console.log("HANDLE BANNER")
     setAlertStatus(true);
     resetAlert();
+    dispatch({ type: SET_BANNER, payload: "" });
   }
 
   return (
@@ -115,7 +117,7 @@ const App = () => {
           currentUser ?
           <React.Fragment>
             <Route path="/dashboard" render={ () => <Dashboard /> } />
-            <Route path="/inventory" render={ () => <Inventory /> } />
+            <Route path="/inventory" render={ () => <Inventory handleBanner={handleBanner} /> } />
             <Route path="/products" render={ () => <Products handleBanner={handleBanner} /> } />
             <Route path="/cart" render={ () => <Cart handleBanner={handleBanner}/> } />
           </React.Fragment> :
