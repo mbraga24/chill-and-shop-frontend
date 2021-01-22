@@ -8,20 +8,27 @@ import './Styles.scss';
 
 const Navbar = ({ history, fixed }) => {
   
-  let seller;
   const dispatch = useDispatch();
   const pathName = history.location.pathname.split("/")[1]
   const currentUser = useSelector(state => state.app.currentUser);
   const orders = useSelector(state => state.order.orders);
   const [ activeItem, setActiveItem ] = useState(pathName)
+  const [ seller, setSeller ] = useState(false)
   const handleItemClick = (e, { name }) => { setActiveItem(name) }
-  // const { type } = currentUser
 
-  if (currentUser.type === "Seller") {
-    seller = true;
-  } else {
-    seller = false;
-  }
+  useEffect(() => {
+    if (currentUser) {
+      if (currentUser.type === "Seller") {
+        setSeller(true);
+      } else {
+        setSeller(false);
+      }
+    }
+  }, [currentUser])
+
+  useEffect(() => {
+    setActiveItem(pathName)
+  }, [pathName])
 
   const handleLogout = () => {
     dispatch({ type: LOGGED_IN, payload: null });
@@ -29,9 +36,6 @@ const Navbar = ({ history, fixed }) => {
     history.push("/");
   }
 
-  useEffect(() => {
-    setActiveItem(pathName)
-  }, [pathName])
   
   
   return (
