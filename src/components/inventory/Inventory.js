@@ -6,7 +6,7 @@ import ProductForm from '../productForm/ProductForm'
 
 import './Styles.scss';
 
-const Inventory = () => {
+const Inventory = ({ handleBanner }) => {
 
   const currentUser = useSelector(state => state.app.currentUser);
   const products = useSelector(state => state.product.products);
@@ -20,7 +20,7 @@ const Inventory = () => {
   }
 
   const findSellerProducts = useCallback(() => {
-    return products.filter(pro => pro.user.email === currentUser.email)
+    return products.filter(pro => pro.seller.email === currentUser.email)
   }, [products, currentUser])
 
   useEffect(() => {
@@ -34,12 +34,18 @@ const Inventory = () => {
             formNumber={formNumber} 
             click={() => handleDeleteComponent(formNumber)}
             showAction={true}
+            handleBanner={handleBanner}
             />));
   };
 
   const displayInventory = () => {
     return sellerProducts.map(item => (
-      <CardItem key={`${item.name}-${item.id}`} item={item} currentUser={currentUser}/>
+      <CardItem 
+        key={`${item.name}-${item.id}`} 
+        item={item} 
+        currentUser={currentUser} 
+        handleBanner={handleBanner}
+      />
     ))
   }
 
