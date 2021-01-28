@@ -11,7 +11,7 @@ import Navbar from './components/navbar/Navbar';
 import Dashboard from './components/dashboard/Dashboard';
 import 'semantic-ui-css/semantic.min.css'
 
-import { LOGGED_IN, SET_ORDERS, SET_PRODUCTS, SET_BANNER } from './store/type';
+import { LOGGED_IN, SET_ORDERS, SET_PRODUCTS, SET_BANNER, UPDATE_TOTAL_ORDER } from './store/type';
 import { autologin, getProducts, getOrders } from './api'
 import { Header, Message, List } from 'semantic-ui-react';
 import './styles/App.scss';
@@ -32,7 +32,7 @@ const App = () => {
       autologin(localStorage.token)
       .then(data => {
         if (!data.error) {
-          console.log("AUTOLOGIN", data)
+          // console.log("AUTOLOGIN", data)
           dispatch({ type: LOGGED_IN, payload: data.user })
         }
       })
@@ -47,13 +47,15 @@ const App = () => {
     })
   },[dispatch])
 
-  // useEffect(() => {
-  //   currentUser && getOrders(localStorage.token)
-  //   .then(data => {
-  //     const { orders } = data
-  //     dispatch({ type: SET_ORDERS, payload: orders })
-  //   })
-  // },[dispatch, currentUser])
+  useEffect(() => {
+    currentUser && getOrders(localStorage.token)
+    .then(data => {
+      const { orders, totalOrder } = data
+      console.log("ORDERS FETCH", orders)
+      dispatch({ type: SET_ORDERS, payload: orders })
+      dispatch({ type: UPDATE_TOTAL_ORDER, payload: totalOrder })
+    })
+  },[dispatch, currentUser])
 
 
   const displayAlert = errors => {

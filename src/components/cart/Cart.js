@@ -12,6 +12,7 @@ const Cart = ({ history, handleBanner }) => {
   
   let cartBody;
   const orders = useSelector(state => state.order.orders);
+  const totalOrder = useSelector(state => state.order.totalOrder);
   const currentUser = useSelector(state => state.app.currentUser);
   const [ emptyCart, setEmptyCart ] = useState(false)
   const dispatch = useDispatch()
@@ -40,17 +41,17 @@ const Cart = ({ history, handleBanner }) => {
   }
 
   const collectPrices = () => {
-    return orders.map(order => parseFloat(order.product.price))
+    return orders.map(order => parseFloat(order.price))
   }
 
-  const totalOrders = () => {
-    return collectPrices().reduce((a,b) => a + b, 0)
-  }
+  // const totalOrders = () => {
+  //   return collectPrices().reduce((a,b) => a + b, 0)
+  // }
 
   const displayOrders = () => {
-    return orders.map(order => (
-      <Grid.Column key={`${order.product.name}-${order.product.price}`}>
-        <OrderItem order={order} currentUser={currentUser} handleBanner={handleBanner}/>
+    return orders.map(item => (
+      <Grid.Column key={`${item.id}`}>
+        <OrderItem order={item} currentUser={currentUser} handleBanner={handleBanner}/>
       </Grid.Column>
     ))
   }
@@ -72,7 +73,7 @@ const Cart = ({ history, handleBanner }) => {
         </Grid>
         <Divider/>
         <div className="cart__orderOverview">
-          <h2>Total: {totalOrders()}</h2>
+          <h2>Total: {totalOrder}</h2>
           <Button inverted color="orange" onClick={handlePlaceOrder}>Place your order</Button>
         </div>
       </Container>

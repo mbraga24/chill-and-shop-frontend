@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal, Header, Grid, Card, Icon, Button } from 'semantic-ui-react'
 import { deleteProduct, createOrder } from '../../api';
-import { REMOVE_PRODUCT, SET_BANNER, ADD_ORDER } from '../../store/type';
+import { REMOVE_PRODUCT, SET_BANNER, UPDATE_ORDER, UPDATE_TOTAL_ORDER } from '../../store/type';
 import ProductForm from '../productForm/ProductForm'
 
 import './Styles.scss';
@@ -23,14 +23,15 @@ const CardItem = ({ item, currentUser, handleBanner }) => {
   }, [soldOut, tempQuantity])
 
   const addToCart = (item) => {
-    setTempQuantity(prevState => tempQuantity - 1)
-    createOrder(item.id, localStorage.token)
+    // console.log("ADD TO CART", item)
+    createOrder(item, localStorage.token)
     .then(newOrder => {
-      const { order } = newOrder
-      dispatch({ type: ADD_ORDER, payload: order });
+      const { orderItem, orderTotal, confirmation } = newOrder;
+      handleBanner();
+      dispatch({ type: UPDATE_ORDER, payload: orderItem });
+      dispatch({ type: UPDATE_TOTAL_ORDER, payload: orderTotal });
+      dispatch({ type: SET_BANNER, payload: confirmation });
     })
-    handleBanner()
-    dispatch({ type: SET_BANNER, payload: "Item added to your cart!" });
   }
 
   const handleDelete = () => {
@@ -38,13 +39,13 @@ const CardItem = ({ item, currentUser, handleBanner }) => {
     deleteProduct(item.id, localStorage.token)
     .then(data => {
       const { product, confirmation } = data;
+      dispatch({ type: REMOVE_PRODUCT, payload: product })
+      dispatch({ type: SET_BANNER, payload: confirmation });
       setTimeout(() => {
         handleBanner()
-        dispatch({ type: REMOVE_PRODUCT, payload: product })
-        dispatch({ type: SET_BANNER, payload: confirmation });
-        setOpenDelete(false)
         setLoader(false)
-      }, [1200])
+        setOpenDelete(false)
+      }, [1000])
     })
   }
 
@@ -52,17 +53,18 @@ const CardItem = ({ item, currentUser, handleBanner }) => {
     return seller.email === currentUser.email
   }
 
-    return (
+  // console.log("CARD ITEM", item)
 
+    return (
       <Grid.Column className="cardItem" id="cardContainer">
         <Card className="cardItem__card">
           <div  role="img" 
-                aria-label={item.name}
-                title={item.name}
+                aria-label={item.title}
+                title={item.title}
                 className="cardItem__image" 
-                style={{backgroundImage: `url(../images/placeholder-product.png)` }} />
+                style={{backgroundImage: `url(${item.image_url})` }} />
           <Card.Content>
-            <Card.Header>{item.name}</Card.Header>
+            <Card.Header>{item.title}</Card.Header>
             <Card.Description>
               Price: ${item.price}
             </Card.Description>

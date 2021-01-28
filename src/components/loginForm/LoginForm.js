@@ -29,12 +29,12 @@ const LoginForm = ({ history, handleBanner, runAlert, credentialsAlert, alertSta
         const { error, header } = data;
         runAlert(header, error);
       } else {
-        console.log("LOGIN USER", data)
-        const { user, token, success } = data;
-        localStorage.token = token;
-        dispatch({ type: LOGGED_IN, payload: user });
-        dispatch({ type: SET_BANNER, payload: success });
+        const { user, token, confirmation } = data;
+        console.log("SUCCESS", confirmation)
         handleBanner();
+        localStorage.token = token;
+        dispatch({ type: SET_BANNER, payload: confirmation });
+        dispatch({ type: LOGGED_IN, payload: user });
         history.push("/dashboard");
       }
     })

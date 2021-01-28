@@ -8,13 +8,12 @@ import './Styles.scss';
 
 const OrderItem = ({ order, currentUser, handleBanner }) => {
 
+  console.log("OrderItem", order)
   const [ open, setOpen ] = useState(false);
   const [ loader, setLoader ] = useState(false);
-  const { product, seller } = order
-  const sellerName = `${seller.first_name} ${seller.last_name}`
+  const { product } = order
+  const sellerName = `${product.seller.first_name} ${product.seller.last_name}`
   
-
-  // const { first_name, last_name } = user
   const dispatch = useDispatch()
 
   const removeFromCart = () => {
@@ -35,17 +34,20 @@ const OrderItem = ({ order, currentUser, handleBanner }) => {
       <Grid.Column className="orderItem" id="cardContainer">
         <Card className="orderItem__card">
           <div  role="img" 
-                aria-label={product.name}
-                title={product.name}
+                aria-label={product.title}
+                title={product.title}
                 className="orderItem__image" 
                 style={{backgroundImage: `url(${product.image_url})` }} />
           <Card.Content>
-            <Card.Header>{product.name}</Card.Header>
+            <Card.Header>{product.title}</Card.Header>
             <Card.Description>
-              Price: ${product.price}
+              Price: ${order.unit_price}
             </Card.Description>
             <Card.Description>
-              Qty: {product.quantity}
+              Total Price: ${order.total_price}
+            </Card.Description>
+            <Card.Description>
+              Qty: {order.quantity}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>

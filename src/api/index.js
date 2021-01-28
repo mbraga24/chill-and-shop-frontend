@@ -70,19 +70,19 @@ export const queryProducts = (type, searchTerm) => {
   .then(r => r.json())
 }
 
-export const createOrder = (productId, userToken) => {
-  return fetch(`${localhost}orders`,{
+export const createOrder = (product, userToken) => {
+  return fetch(`${localhost}create-order`,{
     method: "POST",
     headers: {
       "Content-Type": "Application/json",
       "Authorization": `Bearer ${userToken}`
     },
-    body: JSON.stringify({product_id: productId, quantity: 1})
+    body: JSON.stringify({product_id: product.id, quantity: 1})
   }).then(r => r.json())
 }
 
 export const getOrders = userToken => {
-  return fetch(`${localhost}user-orders`, {
+  return fetch(`${localhost}order_items`, {
     method: "GET",
     headers: {
       "Authorization": `Bearer ${userToken}`
