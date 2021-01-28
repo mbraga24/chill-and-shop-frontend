@@ -104,8 +104,8 @@ export const placeOrder = (orders) => {
   .then(r => r.json())
 }
 
-export const deleteOrder = (orderId) => {
-  return fetch(`${localhost}orders/${orderId}`, {
+export const deleteOrder = (orderItemId) => {
+  return fetch(`${localhost}delete-order-item/${orderItemId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "Application/json",

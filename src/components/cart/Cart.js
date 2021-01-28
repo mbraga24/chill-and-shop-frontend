@@ -11,9 +11,11 @@ import './Styles.scss';
 const Cart = ({ history, handleBanner }) => {
   
   let cartBody;
+  const products = useSelector(state => state.product.products);
   const orders = useSelector(state => state.order.orders);
   const totalOrder = useSelector(state => state.order.totalOrder);
   const currentUser = useSelector(state => state.app.currentUser);
+
   const [ emptyCart, setEmptyCart ] = useState(false)
   const dispatch = useDispatch()
   
@@ -24,6 +26,18 @@ const Cart = ({ history, handleBanner }) => {
 
   const collectOrders = () => {
     return orders.map(order => order.id)
+  }
+
+  const isSoldOut = product => {
+    return product.quantity === 0
+  }
+
+  const checkProductQuantity = quantity => {
+    let options = [];
+    for (let qty = 1; qty <= quantity; qty++) {
+      options.push({ key: qty, text: qty.toString(), value: qty });
+    }
+    return options;
   }
 
   const handlePlaceOrder = () => {
@@ -40,18 +54,15 @@ const Cart = ({ history, handleBanner }) => {
     })
   }
 
-  const collectPrices = () => {
-    return orders.map(order => parseFloat(order.price))
-  }
-
-  // const totalOrders = () => {
-  //   return collectPrices().reduce((a,b) => a + b, 0)
-  // }
-
   const displayOrders = () => {
-    return orders.map(item => (
-      <Grid.Column key={`${item.id}`}>
-        <OrderItem order={item} currentUser={currentUser} handleBanner={handleBanner}/>
+    return orders.map(orderProduct => (
+      <Grid.Column key={`${orderProduct.id}`}>
+        <OrderItem 
+          orderProduct={orderProduct} 
+          soldOut={isSoldOut(orderProduct)}
+          quantityOptions={checkProductQuantity(orderProduct.product.quantity)}
+          currentUser={currentUser} 
+          handleBanner={handleBanner}/>
       </Grid.Column>
     ))
   }
@@ -61,6 +72,8 @@ const Cart = ({ history, handleBanner }) => {
   } else {
     cartBody = displayOrders()
   }
+
+  console.log("orders", orders)
 
     return (
       <Container className="cart">

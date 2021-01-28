@@ -7,7 +7,7 @@ import ProductForm from '../productForm/ProductForm'
 
 import './Styles.scss';
 
-const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityOptions, currentUser, handleBanner }) => {
+const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityOptions = 0, currentUser, handleBanner }) => {
 
   let isAvailable = soldOut || selected ? true : false;
   let cartButtonOptions = soldOut ? "Sold out" : selected ? "Added to cart" : <Icon name='shopping cart' />;
@@ -15,7 +15,7 @@ const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityO
   const [ openUpdate, setOpenUpdate ] = useState(false);
   const [ notShopper, setNotShopper ] = useState(false);
   const [ loader, setLoader ] = useState(false);
-  const [ quantity, setQuantity ] = useState(0);
+  const [ quantity, setQuantity ] = useState(1);
   const { seller } = thisProduct
 
   const dispatch = useDispatch()
@@ -52,8 +52,6 @@ const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityO
     })
   }
 
-  console.log("quantity", quantity)
-
     return (
       <Grid.Column className="cardItem" id="cardContainer">
         <Card className="cardItem__card">
@@ -85,7 +83,7 @@ const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityO
                   disabled={isAvailable}
                   compact
                   selection 
-                  placeholder='Quantity' 
+                  placeholder='Qty' 
                   options={quantityOptions} 
                   onChange={chooseQuantity}
                 />

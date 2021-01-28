@@ -108,7 +108,7 @@ const App = () => {
     <div className="App">
       <Navbar fixed={fixed} />
       { (currentUser && alertStatus) &&
-        <Message attached='bottom' size="large" onDismiss={handleDismiss}>
+        <Message success attached='bottom' size="large" onDismiss={handleDismiss}>
           <Message.Content className="App__banner">
             <Message.Header>{messageBanner}</Message.Header>
           </Message.Content>

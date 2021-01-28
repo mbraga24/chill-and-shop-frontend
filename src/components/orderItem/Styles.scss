@@ -9,6 +9,13 @@
     background-position: center;
     background-repeat: no-repeat;
   }
+
+  &__quantityBlock {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
 }
 
 #cardContainer {
