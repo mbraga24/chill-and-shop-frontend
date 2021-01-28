@@ -21,10 +21,10 @@ export const loginUser = data => {
     }).then(r => r.json())
 }
 
-export const autologin = userToken => {
+export const autologin = () => {
   return fetch(`${localhost}autologin`, {
     headers: {
-      'Authorization': `Bearer ${userToken}`
+      'Authorization': `Bearer ${localStorage.token}`
     }
   })
   .then(r => r.json())
@@ -35,32 +35,32 @@ export const getProducts = () => {
   .then(r => r.json())
 }
 
-export const newProduct = (formData, userToken) => {
+export const newProduct = (formData) => {
 return fetch(`${localhost}products`, {
     method: "POST",
     headers: {
-      'Authorization': `Bearer ${userToken}`
+      'Authorization': `Bearer ${localStorage.token}`
     },
     body: formData
   }).then(r => r.json())
 }
 
-export const updateProduct = (productId, formData, userToken) => {
+export const updateProduct = (productId, formData) => {
   return fetch(`${localhost}products/${productId}`,{
     method: "PATCH",
     headers: {
       'Content-Type': 'Application/json',
-      'Authorization': `Bearer ${userToken}`
+      'Authorization': `Bearer ${localStorage.token}`
     },
     body: formData
   }).then(r => r.json())
 }
 
-export const deleteProduct = (productId, userToken) => {
+export const deleteProduct = (productId) => {
   return fetch(`${localhost}products/${productId}`, {
     method: "DELETE",
     headers: {
-      "Authorization": `Bearer ${userToken}`
+      "Authorization": `Bearer ${localStorage.token}`
     }
   }).then(r => r.json())
 }
@@ -70,46 +70,46 @@ export const queryProducts = (type, searchTerm) => {
   .then(r => r.json())
 }
 
-export const createOrder = (product, userToken) => {
+export const createOrder = (product, quantity) => {
   return fetch(`${localhost}create-order`,{
     method: "POST",
     headers: {
       "Content-Type": "Application/json",
-      "Authorization": `Bearer ${userToken}`
+      "Authorization": `Bearer ${localStorage.token}`
     },
-    body: JSON.stringify({product_id: product.id, quantity: 1})
+    body: JSON.stringify({product_id: product.id, quantity: quantity})
   }).then(r => r.json())
 }
 
-export const getOrders = userToken => {
+export const getOrders = () => {
   return fetch(`${localhost}order_items`, {
     method: "GET",
     headers: {
-      "Authorization": `Bearer ${userToken}`
+      "Authorization": `Bearer ${localStorage.token}`
     }
   })
   .then(r => r.json())
 }
 
-export const placeOrder = (orders, userToken) => {
+export const placeOrder = (orders) => {
   console.log("orders", orders)
   return fetch(`${localhost}place-order`, {
     method: "POST",
     headers: {
       "Content-Type": "Application/json",
-      "Authorization": `Bearer ${userToken}`
+      "Authorization": `Bearer ${localStorage.token}`
     },
     body: JSON.stringify({orders: orders})
   })
   .then(r => r.json())
 }
 
-export const deleteOrder = (orderId, userToken) => {
+export const deleteOrder = (orderId) => {
   return fetch(`${localhost}orders/${orderId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "Application/json",
-      "Authorization": `Bearer ${userToken}`
+      "Authorization": `Bearer ${localStorage.token}`
     }
   }).then(r => r.json())
 }

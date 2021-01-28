@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Container, Grid, Form, Divider } from 'semantic-ui-react';
-import CardItem from '../cardItem/CardItem';
+import CardProduct from '../cardProduct/CardProduct';
 import { queryProducts } from '../../api';
 
 import './Styles.scss';
@@ -12,9 +12,26 @@ const Product = ({ handleBanner }) => {
   const [ searchProducts, setSearchProducts ] = useState([])
   const currentUser = useSelector(state => state.app.currentUser);
   const products = useSelector(state => state.product.products);
+  const orders = useSelector(state => state.order.orders);
 
   const handleChange = (e) => {
     setSearchTerm(e.target.value)
+  }
+
+  const isSoldOut = product => {
+    return product.quantity === 0
+  }
+
+  const isInShoppingCart = product => {
+    return !!orders.find(order => order.product.title === product.title)
+  }
+
+  const checkProductQuantity = quantity => {
+    let options = [];
+    for (let qty = 1; qty <= quantity; qty++) {
+      options.push({ key: qty, text: qty.toString(), value: qty });
+    }
+    return options;
   }
 
   useEffect(() => {
@@ -28,10 +45,13 @@ const Product = ({ handleBanner }) => {
   }, [searchTerm])
 
   const displayInventory = () => {
-    return searchProducts.map(item => (
-      <CardItem 
-        key={`${item.title}-${item.id}`} 
-        item={item} 
+    return searchProducts.map(product => (
+      <CardProduct 
+        key={`${product.title}-${product.id}`} 
+        thisProduct={product} 
+        selected={isInShoppingCart(product)}
+        soldOut={isSoldOut(product)}
+        quantityOptions={checkProductQuantity(product.quantity)}
         currentUser={currentUser}
         handleBanner={handleBanner}
         />
@@ -44,7 +64,7 @@ const Product = ({ handleBanner }) => {
         <Divider/>
         <Form className="products__searchInput">
           <Form.Input  
-            placeholder="Search for an item"
+            placeholder="Search for a product"
             onChange={handleChange}
             />
         </Form>

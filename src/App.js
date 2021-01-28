@@ -29,7 +29,7 @@ const App = () => {
 
   useEffect(() => {
     if (localStorage.token) {
-      autologin(localStorage.token)
+      autologin()
       .then(data => {
         if (!data.error) {
           // console.log("AUTOLOGIN", data)
@@ -40,18 +40,18 @@ const App = () => {
   },[dispatch])
 
   useEffect(() => {
-    getProducts(localStorage.token)
+    getProducts()
     .then(products => {
-      console.log("PRODUCTS", products)
+      // console.log("PRODUCTS", products)
       dispatch({ type: SET_PRODUCTS, payload: products })
     })
   },[dispatch])
 
   useEffect(() => {
-    currentUser && getOrders(localStorage.token)
+    currentUser && getOrders()
     .then(data => {
       const { orders, totalOrder } = data
-      console.log("ORDERS FETCH", orders)
+      // console.log("ORDERS FETCH", orders)
       dispatch({ type: SET_ORDERS, payload: orders })
       dispatch({ type: UPDATE_TOTAL_ORDER, payload: totalOrder })
     })

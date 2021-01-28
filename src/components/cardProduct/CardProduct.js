@@ -1,34 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Modal, Header, Grid, Card, Icon, Button } from 'semantic-ui-react'
+import { Modal, Header, Grid, Card, Icon, Button, Dropdown } from 'semantic-ui-react'
 import { deleteProduct, createOrder } from '../../api';
-import { REMOVE_PRODUCT, SET_BANNER, UPDATE_ORDER, UPDATE_TOTAL_ORDER } from '../../store/type';
+import { REMOVE_PRODUCT, SET_BANNER, ADD_ORDER, UPDATE_TOTAL_ORDER } from '../../store/type';
 import ProductForm from '../productForm/ProductForm'
 
 import './Styles.scss';
 
-const CardItem = ({ item, currentUser, handleBanner }) => {
+const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityOptions, currentUser, handleBanner }) => {
 
+  let isAvailable = soldOut || selected ? true : false;
+  let cartButtonOptions = soldOut ? "Sold out" : selected ? "Added to cart" : <Icon name='shopping cart' />;
   const [ openDelete, setOpenDelete ] = useState(false);
   const [ openUpdate, setOpenUpdate ] = useState(false);
+  const [ notShopper, setNotShopper ] = useState(false);
   const [ loader, setLoader ] = useState(false);
-  const [ soldOut, setSoldOut ] = useState(false);
-  const [ tempQuantity, setTempQuantity ] = useState(false);
-  const { seller } = item
+  const { seller } = thisProduct
+
   const dispatch = useDispatch()
 
   useEffect(() => {
-    setTempQuantity(item.quantity)
-    setSoldOut(item.quantity === 0)
-  }, [soldOut, tempQuantity])
+    setNotShopper(seller.email !== currentUser.email)
+  }, [notShopper])
 
   const addToCart = (item) => {
-    // console.log("ADD TO CART", item)
     createOrder(item, localStorage.token)
     .then(newOrder => {
       const { orderItem, orderTotal, confirmation } = newOrder;
       handleBanner();
-      dispatch({ type: UPDATE_ORDER, payload: orderItem });
+      dispatch({ type: ADD_ORDER, payload: orderItem });
       dispatch({ type: UPDATE_TOTAL_ORDER, payload: orderTotal });
       dispatch({ type: SET_BANNER, payload: confirmation });
     })
@@ -36,7 +36,7 @@ const CardItem = ({ item, currentUser, handleBanner }) => {
 
   const handleDelete = () => {
     setLoader(true)
-    deleteProduct(item.id, localStorage.token)
+    deleteProduct(thisProduct.id, localStorage.token)
     .then(data => {
       const { product, confirmation } = data;
       dispatch({ type: REMOVE_PRODUCT, payload: product })
@@ -49,42 +49,48 @@ const CardItem = ({ item, currentUser, handleBanner }) => {
     })
   }
 
-  const isSeller = () => {
-    return seller.email === currentUser.email
-  }
-
-  // console.log("CARD ITEM", item)
-
     return (
       <Grid.Column className="cardItem" id="cardContainer">
         <Card className="cardItem__card">
           <div  role="img" 
-                aria-label={item.title}
-                title={item.title}
+                aria-label={thisProduct.title}
+                title={thisProduct.title}
                 className="cardItem__image" 
-                style={{backgroundImage: `url(${item.image_url})` }} />
+                style={{backgroundImage: `url(${thisProduct.image_url})` }} />
           <Card.Content>
-            <Card.Header>{item.title}</Card.Header>
+            <Card.Header>{thisProduct.title}</Card.Header>
             <Card.Description>
-              Price: ${item.price}
+              Price: ${thisProduct.price}
             </Card.Description>
             <Card.Description>
-              Qty: {tempQuantity}
+              Qty: {thisProduct.quantity}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>
             <div floated='left'>
               <Icon name='user' />
               {seller.first_name} {seller.last_name}
-              { !isSeller() &&
-                <Button floated='right' color="blue" disabled={soldOut} icon onClick={() => addToCart(item)}>
-                  <Icon name='shopping cart' />
+            </div>
+            <div>
+            { 
+              notShopper && 
+              <>
+                <Dropdown 
+                  disabled={isAvailable}
+                  compact
+                  selection 
+                  placeholder='Quantity' 
+                  options={quantityOptions} 
+                />
+                <Button floated='right' color="blue" disabled={isAvailable} icon onClick={() => addToCart(thisProduct)}>
+                  {cartButtonOptions}
                 </Button>
-              }
+              </>
+            }
             </div>
           </Card.Content>
           {
-            currentUser && isSeller() && 
+            currentUser && !notShopper && 
             <Card.Content textAlign='center' extra>
               <Modal
                 closeIcon
@@ -132,7 +138,7 @@ const CardItem = ({ item, currentUser, handleBanner }) => {
               >
                 <Header icon='edit' content='Update Product' />
                 <Modal.Content>
-                  <ProductForm showAction={false} product={item}/>
+                  <ProductForm showAction={false} product={thisProduct}/>
                 </Modal.Content>
               </Modal>
             </Card.Content>
@@ -142,4 +148,4 @@ const CardItem = ({ item, currentUser, handleBanner }) => {
   )
 }
 
-export default CardItem;
+export default CardProduct;

@@ -1,4 +1,3 @@
-import { AccordionTitle } from 'semantic-ui-react';
 import { SET_ORDERS, ADD_ORDER, UPDATE_ORDER, REMOVE_ORDER, UPDATE_TOTAL_ORDER } from './type';
 
 const defaultState = {
