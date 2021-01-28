@@ -15,16 +15,19 @@ const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityO
   const [ openUpdate, setOpenUpdate ] = useState(false);
   const [ notShopper, setNotShopper ] = useState(false);
   const [ loader, setLoader ] = useState(false);
+  const [ quantity, setQuantity ] = useState(0);
   const { seller } = thisProduct
 
   const dispatch = useDispatch()
-
+  
   useEffect(() => {
     setNotShopper(seller.email !== currentUser.email)
   }, [notShopper])
 
+  const chooseQuantity = (e, {value}) => {setQuantity(value)};
+
   const addToCart = (item) => {
-    createOrder(item, localStorage.token)
+    createOrder(item, quantity)
     .then(newOrder => {
       const { orderItem, orderTotal, confirmation } = newOrder;
       handleBanner();
@@ -48,6 +51,8 @@ const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityO
       }, [1000])
     })
   }
+
+  console.log("quantity", quantity)
 
     return (
       <Grid.Column className="cardItem" id="cardContainer">
@@ -76,11 +81,13 @@ const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityO
               notShopper && 
               <>
                 <Dropdown 
+                  name="quantity"
                   disabled={isAvailable}
                   compact
                   selection 
                   placeholder='Quantity' 
                   options={quantityOptions} 
+                  onChange={chooseQuantity}
                 />
                 <Button floated='right' color="blue" disabled={isAvailable} icon onClick={() => addToCart(thisProduct)}>
                   {cartButtonOptions}

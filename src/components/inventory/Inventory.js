@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector } from 'react-redux';
 import { Container, Grid, Button, Divider } from 'semantic-ui-react'
-import CardItem from '../cardItem/CardItem';
+import CardProduct from '../cardProduct/CardProduct';
 import ProductForm from '../productForm/ProductForm'
 
 import './Styles.scss';
@@ -40,7 +40,7 @@ const Inventory = ({ handleBanner }) => {
 
   const displayInventory = () => {
     return sellerProducts.map(item => (
-      <CardItem 
+      <CardProduct 
         key={`${item.name}-${item.id}`} 
         item={item} 
         currentUser={currentUser} 
