@@ -70,14 +70,14 @@ export const queryProducts = (type, searchTerm) => {
   .then(r => r.json())
 }
 
-export const createOrder = (product, quantity) => {
+export const createOrder = (product_id, quantity) => {
   return fetch(`${localhost}create-order`,{
     method: "POST",
     headers: {
       "Content-Type": "Application/json",
       "Authorization": `Bearer ${localStorage.token}`
     },
-    body: JSON.stringify({product_id: product.id, quantity: quantity})
+    body: JSON.stringify({product_id, quantity})
   }).then(r => r.json())
 }
 
@@ -99,12 +99,12 @@ export const placeOrder = (orders) => {
       "Content-Type": "Application/json",
       "Authorization": `Bearer ${localStorage.token}`
     },
-    body: JSON.stringify({orders: orders})
+    body: JSON.stringify({orders})
   })
   .then(r => r.json())
 }
 
-export const deleteOrder = (orderItemId) => {
+export const deleteOrderItem = (orderItemId) => {
   return fetch(`${localhost}delete-order-item/${orderItemId}`, {
     method: "DELETE",
     headers: {
@@ -112,4 +112,17 @@ export const deleteOrder = (orderItemId) => {
       "Authorization": `Bearer ${localStorage.token}`
     }
   }).then(r => r.json())
+}
+
+export const updateOrderItem = (orderItemId, quantity) => {
+  console.log("orderItemId, quantity", orderItemId, quantity)
+  return fetch(`${localhost}update-order-item/${orderItemId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "Application/json",
+      "Authorization": `Bearer ${localStorage.token}`
+    },
+    body: JSON.stringify({quantity})
+  })
+  .then(r => r.json())
 }

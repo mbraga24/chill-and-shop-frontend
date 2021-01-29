@@ -2,34 +2,43 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal, Header, Grid, Card, Icon, Button, Dropdown, Divider } from 'semantic-ui-react'
 
-import { deleteOrder } from '../../api';
-import { REMOVE_ORDER, UPDATE_TOTAL_ORDER, SET_BANNER } from '../../store/type';
+import { deleteOrderItem, updateOrderItem } from '../../api';
+import { REMOVE_ORDER, UPDATE_TOTAL_ORDER, SET_BANNER, UPDATE_ORDER } from '../../store/type';
 import './Styles.scss';
 
 const OrderItem = ({ orderProduct, soldOut = false, quantityOptions = 0, currentUser, handleBanner }) => {
 
   const [ open, setOpen ] = useState(false);
   const [ loader, setLoader ] = useState(false);
-  const [ quantity, setQuantity ] = useState(0);
   const { product } = orderProduct
   const sellerName = `${product.seller.first_name} ${product.seller.last_name}`
   const dispatch = useDispatch()
 
-  const chooseQuantity = (e, {value}) => {setQuantity(value)};
+  const updateCart = (e, {value}) => {
+    updateOrderItem(orderProduct.id, value)
+    .then(data => {
+      console.log("UPDATE CART", data)
+      const { orderItem, orderTotal, confirmation } = data;
+      console.log("orderItem", orderItem)
+      handleBanner();
+      dispatch({ type: UPDATE_TOTAL_ORDER, payload: orderTotal });
+      dispatch({ type: UPDATE_ORDER, payload: orderItem });
+      dispatch({ type: SET_BANNER, payload: confirmation });
+    })
+  };
 
   const removeFromCart = () => {
     setLoader(true)
-    deleteOrder(orderProduct.id)
+    deleteOrderItem(orderProduct.id)
     .then(data => {
-      console.log("REMOVE FROM CART", data)
       const { orderItem, orderTotal, confirmation } = data;
       setTimeout(() => {
-        handleBanner()
+        handleBanner();
         dispatch({ type: REMOVE_ORDER, payload: orderItem.id });
         dispatch({ type: UPDATE_TOTAL_ORDER, payload: orderTotal });
         dispatch({ type: SET_BANNER, payload: confirmation });
-        setOpen(false)
-        setLoader(false)
+        setOpen(false);
+        setLoader(false);
       }, [1500])
     })
   }
@@ -63,7 +72,7 @@ const OrderItem = ({ orderProduct, soldOut = false, quantityOptions = 0, current
                   selection 
                   placeholder='Update qty' 
                   options={quantityOptions} 
-                  onChange={chooseQuantity}
+                  onChange={updateCart}
                 />
               </div>
             </Card.Description>

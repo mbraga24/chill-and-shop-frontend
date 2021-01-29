@@ -27,7 +27,7 @@ const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityO
   const chooseQuantity = (e, {value}) => {setQuantity(value)};
 
   const addToCart = (item) => {
-    createOrder(item, quantity)
+    createOrder(item.id, quantity)
     .then(newOrder => {
       const { orderItem, orderTotal, confirmation } = newOrder;
       handleBanner();
