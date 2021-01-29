@@ -92,16 +92,14 @@ export const getOrders = () => {
 }
 
 export const placeOrder = (orders) => {
-  console.log("orders", orders)
+  // console.log("orders", orders)
   return fetch(`${localhost}place-order`, {
     method: "POST",
     headers: {
       "Content-Type": "Application/json",
       "Authorization": `Bearer ${localStorage.token}`
-    },
-    body: JSON.stringify({orders})
+    }
   })
-  .then(r => r.json())
 }
 
 export const deleteOrderItem = (orderItemId) => {

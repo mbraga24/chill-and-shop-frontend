@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Grid, Divider, Button } from 'semantic-ui-react';
-import { SET_BANNER, REMOVE_ORDER } from '../../store/type';
+import { SET_BANNER, SET_ORDERS, UPDATE_TOTAL_ORDER } from '../../store/type';
 import OrderItem from '../orderItem/OrderItem';
 import { placeOrder } from '../../api';
 
@@ -41,15 +41,18 @@ const Cart = ({ history, handleBanner }) => {
   }
 
   const handlePlaceOrder = () => {
-    const orders = collectOrders()
-    placeOrder(orders, localStorage.token)
+    placeOrder()
+    .then(r => r.json())
     .then(data => {
-      const { orders } = data
-      for (let order of orders) {
-        dispatch({ type: REMOVE_ORDER, payload: order })
-      }
       handleBanner()
-      dispatch({ type: SET_BANNER, payload: "Order completed! Thank you for shopping." })
+      const { confirmation } = data
+      if (data.error) {
+        dispatch({ type: SET_BANNER, payload: confirmation })
+      } else {
+        dispatch({ type: SET_ORDERS, payload: [] })
+        dispatch({ type: UPDATE_TOTAL_ORDER, payload: 0 })
+        dispatch({ type: SET_BANNER, payload: confirmation })
+      }
       history.push('/dashboard')
     })
   }
