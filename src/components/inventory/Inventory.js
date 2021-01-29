@@ -39,10 +39,10 @@ const Inventory = ({ handleBanner }) => {
   };
 
   const displayInventory = () => {
-    return sellerProducts.map(item => (
+    return sellerProducts.map(thisProduct => (
       <CardProduct 
-        key={`${item.name}-${item.id}`} 
-        item={item} 
+        key={`${thisProduct.title}-${thisProduct.id}`} 
+        thisProduct={thisProduct} 
         currentUser={currentUser} 
         handleBanner={handleBanner}
       />

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Container, Image, Form, Button, Card, Placeholder } from 'semantic-ui-react'
+import { Container, Image, Form, Button, Card, Placeholder, Icon } from 'semantic-ui-react'
 import useFormFields from '../../hooks/useFormFields';
 
 import { ADD_PRODUCT, SET_BANNER } from '../../store/type';
@@ -38,6 +38,7 @@ const ProductForm = ({ formNumber, click = null, showAction, product = null, han
 
   const fileChange = e => {
     setFile(e.target.files[0]);
+    console.log(e.target.files[0])
     setPlaceholder(URL.createObjectURL(e.target.files[0]))
     setFileName(e.target.files[0].name);
   }
@@ -74,82 +75,66 @@ const ProductForm = ({ formNumber, click = null, showAction, product = null, han
     }
 
   }
-
+    console.log("placeholder", placeholder)
+    console.log("formNumber", formNumber)
     return (
-    <Container className="productForm">
-      <div className="productForm__innerContainer">
-        <Card>
-        {imageLoader ? 
+    <div className="productForm">
+        <Card className="productForm__card">
           <Card.Content>
-            <Placeholder style={{margin: 5, height: 200, width: 250 }}>
-              <Placeholder.Image square />
-            </Placeholder>
-          </Card.Content> :
-          <Card.Content style={{height: "100%"}}>
-            <Image 
-            as="label"
-            htmlFor={`file-${formNumber}`}
-            src={`${placeholder}`} 
-            size='big' 
-            style={{margin: 5, height: 200, width: 250}}
-            />
+            <label for="image">
+              <input 
+                type="file" 
+                name="image" 
+                id="image" 
+                accept="image/png, image/jpeg, image/jpg"
+                hidden
+                onChange={fileChange}
+                />
+              <img src={`${placeholder}`} className="productForm__picture" />
+            </label>
           </Card.Content>
-        }
         </Card>
-        <div className="productForm__imageFields">
-          <Form onSubmit={onFormSubmit}>
-            <Form.Field>
-              <input
-              name="file"
-              type="file"
-              id={`file-${formNumber}`}
-              accept="image/png, image/jpeg, image/jpg"
-              hidden
-              onChange={fileChange}
-              />
-              <Form.Input
-              fluid
-              label="Image"
-              placeholder="Image"
-              readOnly
-              disabled={disableName}
-              value={fileName}
-              />
-              <Form.Input
-              name="title"
-              fluid
-              label="Product title"
-              placeholder="Leather Shoes"
-              onChange={handleFieldChange}
-              defaultValue={showAction ? "" : fields.title}
-              />
-            <Form.Group widths='equal'>
-              <Form.Input 
-              name="price"
-              fluid 
-              label='Price' 
-              placeholder="$39.99" 
-              onChange={handleFieldChange}
-              defaultValue={showAction ? "" : fields.price}
-              />
-              <Form.Input 
-              name="quantity"
-              fluid 
-              label="Quantity" 
-              placeholder='2' 
-              onChange={handleFieldChange}
-              defaultValue={showAction ? "" : fields.quantity}
-              />
-            </Form.Group>
-              <Button type="submit" color="blue" loading={imageLoader}>
-                {showAction ? "Add New Product" : "Update "}
-              </Button>    
-              {showAction && <Button type="button" color="red" icon='cancel' onClick={click} />}
-            </Form.Field>
-          </Form>
-        </div>
-      </div>
-    </Container>
+        <Form onSubmit={onFormSubmit} className="productForm__form">
+          <Form.Field>
+            <Form.Input
+            name="title"
+            fluid
+            label="Product title"
+            placeholder="Leather Shoes"
+            onChange={handleFieldChange}
+            defaultValue={showAction ? "" : fields.title}
+            />
+          <Form.Group widths='equal'>
+            <Form.Input 
+            name="price"
+            fluid 
+            label='Price' 
+            placeholder="$39.99" 
+            onChange={handleFieldChange}
+            defaultValue={showAction ? "" : fields.price}
+            />
+            <Form.Input 
+            name="quantity"
+            fluid 
+            label="Quantity" 
+            placeholder='2' 
+            onChange={handleFieldChange}
+            defaultValue={showAction ? "" : fields.quantity}
+            />
+          </Form.Group>
+            <Button type="submit" color="blue" loading={imageLoader}>
+              <Icon name={`${showAction ? "add" : "edit" }`} /> 
+              {showAction ? "Add product" : "Update"}
+            </Button>    
+              {
+                showAction && 
+                <Button type="button" color="red" onClick={click}>
+                  <Icon name='cancel' /> Cancel
+                </Button>    
+              }
+          </Form.Field>
+        </Form>
+    </div>
   )
 }
 

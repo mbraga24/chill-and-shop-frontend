@@ -1,19 +1,24 @@
 .productForm {
-
-  &__innerContainer {
   display: flex;
+  justify-content: center;
+  align-items: flex-start;
   margin: 3em 0;
+
+  &__card {
+    height: 17em;
   }
 
-  &__image {
+  &__form {
+    width: 40em;
+    margin-left: 2em;
+  }
+
+  &__picture {
+    width: 100%;
     height: 200px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-  }
-
-  &__imageFields {
-    width: 50%;
-    margin: 0 auto;
+    object-fit: cover;
   }
 }
