@@ -1,7 +1,9 @@
-import { SET_PRODUCTS, ADD_PRODUCT, REMOVE_PRODUCT } from './type';
+import { SET_PRODUCTS, ADD_PRODUCT, ADD_PRODUCT_FORM, UPDATE_PRODUCT_FORM, REMOVE_PRODUCT } from './type';
 
 const defaultState = {
-  products: []
+  products: [],
+  newProducts: []
+  // newProducts: [{title: "", price: "", fileName: "0-Goku.jpg"}]
 }
 
 const reducer = (state = defaultState, action) => {
@@ -22,6 +24,23 @@ const reducer = (state = defaultState, action) => {
       return {
         ...state,
         products: [...filteredProducts]
+      }
+      case ADD_PRODUCT_FORM: 
+      return {
+        ...state,
+        newProducts: [...state.newProducts, action.payload]
+      }
+    case UPDATE_PRODUCT_FORM:
+      const updatedData = state.newProducts.map(data => {
+        if (data.fileName === action.payload.fileName) {
+          return action.payload
+        }
+      })
+      const filteredData = state.newProducts.filter(data => data.fileName !== action.payload.fileName)
+      const newData = [...filteredData, updatedData]
+      return {
+        ...state,
+        newProducts: newData
       }
     default: 
       return state

@@ -6,6 +6,8 @@ export const SET_BANNER = "SET_BANNER";
 export const SET_PRODUCTS = "SET_PRODUCTS"; 
 export const ADD_PRODUCT = "ADD_PRODUCT"; 
 export const REMOVE_PRODUCT = "REMOVE_PRODUCT"; 
+export const ADD_PRODUCT_FORM = "ADD_PRODUCT_FORM"; 
+export const UPDATE_PRODUCT_FORM = "UPDATE_PRODUCT_FORM"; 
 
 // ================= ORDERS =================
 export const SET_ORDERS = "SET_ORDERS"; 
