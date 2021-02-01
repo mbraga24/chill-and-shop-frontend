@@ -32,7 +32,6 @@ const App = () => {
       autologin()
       .then(data => {
         if (!data.error) {
-          // console.log("AUTOLOGIN", data)
           dispatch({ type: LOGGED_IN, payload: data.user })
         }
       })
@@ -42,7 +41,6 @@ const App = () => {
   useEffect(() => {
     getProducts()
     .then(products => {
-      // console.log("PRODUCTS", products)
       dispatch({ type: SET_PRODUCTS, payload: products })
     })
   },[dispatch])
@@ -51,7 +49,6 @@ const App = () => {
     currentUser && getOrders()
     .then(data => {
       const { orders, totalOrder } = data
-      // console.log("ORDERS FETCH", orders)
       dispatch({ type: SET_ORDERS, payload: orders })
       dispatch({ type: UPDATE_TOTAL_ORDER, payload: totalOrder })
     })

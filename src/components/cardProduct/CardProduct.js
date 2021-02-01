@@ -22,7 +22,7 @@ const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityO
   
   useEffect(() => {
     setNotShopper(seller.email !== currentUser.email)
-  }, [notShopper])
+  }, [notShopper, currentUser, seller])
 
   const chooseQuantity = (e, {value}) => {setQuantity(value)};
 

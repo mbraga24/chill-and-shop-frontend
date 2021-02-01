@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Grid, Button, Divider, Form } from 'semantic-ui-react'
-import { ADD_PRODUCT_FORM, UPDATE_PRODUCT_FORM } from '../../store/type';
+import { Container, Grid, Button, Divider, Form, Icon } from 'semantic-ui-react';
+import { ADD_PRODUCT, SET_BANNER, SET_FORM } from '../../store/type';
 import CardProduct from '../cardProduct/CardProduct';
-import ProductForm from '../productForm/ProductForm'
-// import useFormFields from '../../hooks/useFormFields';
+import ProductForm from '../productForm/ProductForm';
 import { newProduct } from '../../api';
 import './Styles.scss';
 
@@ -13,108 +12,47 @@ const Inventory = ({ handleBanner }) => {
   const currentUser = useSelector(state => state.app.currentUser);
   const products = useSelector(state => state.product.products);
   const newProducts = useSelector(state => state.product.newProducts);
-  const [ files, setFiles ] = useState(null)
-  const [ sellerProducts, setSellerProducts] = useState([])
-  const [ productFormList, setProductFormList ] = useState([])
-  const [ collectData, setCollectData ] = useState([])
-  const dispatch = useDispatch()
-  // const [ fields, handleFieldChange ] = useFormFields({
-  //   title: "",
-  //   price: "",
-  //   quantity: ""
-  // })
-  const handleDeleteComponent = (index) => {
-    console.log("productFormList DELETE", productFormList)
-  }
+  const [ imageLoader, setImageLoader ] = useState(false);
+  const [ createReady, setCreateReady ] = useState(true);
+  const [ sellerProducts, setSellerProducts] = useState([]);
+  const [ productFormList, setProductFormList ] = useState([]);
+  const dispatch = useDispatch();
+
+  const handleDelete = useCallback(( index, fileValue) => {
+    console.log("DELETE index", index);
+    console.log("DELETE fileValue", fileValue);
+    console.log("DELETE productFormList", productFormList);
+  }, [productFormList])
 
   const findSellerProducts = useCallback(() => {
     return products.filter(pro => pro.seller.email === currentUser.email)
   }, [products, currentUser])
 
+  const handleImages = useCallback((e) => {
+    const files = e.target.files ;
+    const currentFormIndex = productFormList.length;
+    console.log("currentFormIndex", currentFormIndex)
 
-
-  const onFormSubmit = e => {
-    e.preventDefault()
-    // setImageLoader(true)
-    console.log("collectData.length", collectData.length)
-    for (let i = 0; i < collectData.length; i++) {
-      newProduct(collectData[i])
-      // .then(data => {
-      //   const { product, confirmation } = data
-      //   handleBanner()
-      //   dispatch({ type: ADD_PRODUCT, payload: product })
-      //   dispatch({ type: SET_BANNER, payload: confirmation });
-      //   setImageLoader(false)
-      // })
-    }
-  }
-
-  const handleData = (productInfo) => {
-    console.log("PRODUCT INFO", productInfo)
-
-    // console.log("is this true? -->>", !!newProducts.find(data => data.fileSize !== productInfo.fileSize))
-
-    if (!newProducts.find(data => data.fileName == productInfo.fileName)) {
-      console.log("PRODUCT CREATED")
-      dispatch({ type: ADD_PRODUCT_FORM, payload: productInfo })
-    } else {
-      console.log("PRODUCT ALREADY EXIST")
-    }
-    // else if (newProducts.find(data => data.fileName === productInfo.fileName)) {
-    //   console.log("PRODUCT UPDATED")
-    //   dispatch({ type: UPDATE_PRODUCT_FORM, payload: productInfo })
-    // }
-
-
-    // const files = [...this.state.files]; // Spread syntax creates a shallow copy
-    // files.push(...e.target.files); // Spread again to push each selected file individually
-    // this.setState({ files });
-
-    // let allData = collectData.map(data => {
-    //   if(data.fileName === productInfo.fileName) {
-    //     return productInfo
-    //   } else {
-    //     return data
-    //   }
-    // })
-
-    // console.log("allData", allData)
-
-    // const data = [...collectData]; // Spread syntax creates a shallow copy
-    // data.push(productInfo); // Spread again to push each selected file individually
-    // setCollectData([...data, productInfo])
-  }
-
-
-  const handleImages = (e) => {
-    console.log(e.target.files)
-    const files = e.target.files
-
-
-    const currentFormCount = productFormList.length
-    
-    const formData = new FormData();
-    
-    
     for (let i = 0; i < files.length; i++) {
-      formData.append('files[]', files[i])
-
-      setProductFormList(prevForm => ([...prevForm, <ProductForm 
+      const formData = new FormData();
+      formData.append("file", files[i]);
+      formData.append("fileName", files[i].name)
+      formData.append("title", "")
+      
+      setProductFormList(prevForm => ([<ProductForm 
         key={files[i].name} 
-        deleteForm={() => handleDeleteComponent(i)}
+        deleteForm={() => handleDelete(i + currentFormIndex, formData.get("fileName"))}
         showAction={true}
-        handleBanner={handleBanner}
         file={files[i]}
         formData={formData}
-        handleData={handleData}
-      />]))
-
+      />, ...prevForm]))
     }
-  }
+  }, [productFormList, handleDelete])
 
   useEffect(() => {
     setSellerProducts(findSellerProducts())
-  }, [findSellerProducts])
+    setCreateReady(productFormList.length === 0)
+  }, [findSellerProducts, setCreateReady, productFormList])
 
   const displayInventory = () => {
     return sellerProducts.map(thisProduct => (
@@ -127,32 +65,54 @@ const Inventory = ({ handleBanner }) => {
     ))
   }
 
-    console.log("newProducts:", newProducts)
-    
+  const onFormSubmit = e => {
+    e.preventDefault()
+    setImageLoader(true);
+    for (let i = 0; i < newProducts.length; i++) {
+      newProduct(newProducts[i])
+      .then(data => {
+        const { product, confirmation } = data
+        handleBanner();
+        dispatch({ type: ADD_PRODUCT, payload: product });
+        dispatch({ type: SET_BANNER, payload: confirmation });
+        setProductFormList([])
+        dispatch({ type: SET_FORM, payload: [] });
+        setImageLoader(false);
+      })
+    }
+  }
+
     return (
       <Container className="inventory">
         <h1  className="inventory__title">Inventory</h1>
         <Divider/>
         <div className="inventory__buttonWrapper">
-          {/* <Button icon='add' color="blue" onClick={addFormOnClick}> */}
-          <Button type="button" htmlFor="files" as="label" icon='add' color="blue">
+          <Button type="button" htmlFor="files" as="label" color="blue">
+          <Icon name='add' />
             Sell a new product
           </Button>
           <input 
             type="file" 
             id="files" 
-            name="files[]" 
+            // name="files[]" 
+            name="files" 
             multiple
             hidden
             accept="image/png, image/jpeg, image/jpg"
-            onChange={(e) => handleImages(e)}
+            onChange={(e) => handleImages(e, productFormList)}
           />
         </div>
         <Form onSubmit={onFormSubmit}>
           {productFormList}
-          <Button type="submit" color="blue">
-            Submit
-          </Button>   
+          <div className={`inventory__createBtn ${createReady && "inventory--hideCreateBtn"}`}>
+            <Button 
+              type="submit" 
+              color="blue" 
+              loading={imageLoader}>
+              Create Products
+            </Button>   
+          </div>
+            {!createReady && <Divider/>}
         </Form>
         <Grid>
           <Grid.Row columns={4}>

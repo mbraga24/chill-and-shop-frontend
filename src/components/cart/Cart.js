@@ -11,7 +11,6 @@ import './Styles.scss';
 const Cart = ({ history, handleBanner }) => {
   
   let cartBody;
-  const products = useSelector(state => state.product.products);
   const orders = useSelector(state => state.order.orders);
   const totalOrder = useSelector(state => state.order.totalOrder);
   const currentUser = useSelector(state => state.app.currentUser);
@@ -22,11 +21,6 @@ const Cart = ({ history, handleBanner }) => {
   useEffect(() => {
     setEmptyCart(orders.length === 0)
   }, [emptyCart, orders.length])
-
-
-  const collectOrders = () => {
-    return orders.map(order => order.id)
-  }
 
   const isSoldOut = product => {
     return product.quantity === 0
@@ -75,8 +69,6 @@ const Cart = ({ history, handleBanner }) => {
   } else {
     cartBody = displayOrders()
   }
-
-  console.log("orders", orders)
 
     return (
       <Container className="cart">

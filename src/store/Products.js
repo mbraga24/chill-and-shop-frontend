@@ -1,9 +1,8 @@
-import { SET_PRODUCTS, ADD_PRODUCT, ADD_PRODUCT_FORM, UPDATE_PRODUCT_FORM, REMOVE_PRODUCT } from './type';
+import { SET_PRODUCTS, ADD_PRODUCT, SET_FORM, ADD_FORM, UPDATE_FORM, DELETE_FORM, REMOVE_PRODUCT } from './type';
 
 const defaultState = {
   products: [],
   newProducts: []
-  // newProducts: [{title: "", price: "", fileName: "0-Goku.jpg"}]
 }
 
 const reducer = (state = defaultState, action) => {
@@ -25,22 +24,34 @@ const reducer = (state = defaultState, action) => {
         ...state,
         products: [...filteredProducts]
       }
-      case ADD_PRODUCT_FORM: 
+    case SET_FORM: 
+      return {
+        ...state,
+        newProducts: action.payload
+      }
+    case ADD_FORM: 
       return {
         ...state,
         newProducts: [...state.newProducts, action.payload]
       }
-    case UPDATE_PRODUCT_FORM:
-      const updatedData = state.newProducts.map(data => {
-        if (data.fileName === action.payload.fileName) {
+    case UPDATE_FORM:
+      const updatedForms = state.newProducts.map(data => {
+        if (data.get("fileName") === action.payload.get("fileName")) {
           return action.payload
+        } else {
+          return data
         }
       })
-      const filteredData = state.newProducts.filter(data => data.fileName !== action.payload.fileName)
-      const newData = [...filteredData, updatedData]
       return {
         ...state,
-        newProducts: newData
+        newProducts: [...updatedForms]
+      }
+    case DELETE_FORM:
+      const filteredForms = state.newProducts.filter(data => data.get("fileName") !== action.payload.get("fileName"))
+      console.log("DELETE_FORM", filteredForms)
+      return {
+        ...state,
+        newProducts: [...filteredForms]
       }
     default: 
       return state

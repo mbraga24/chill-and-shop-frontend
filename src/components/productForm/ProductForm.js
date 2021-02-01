@@ -1,66 +1,45 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Image, Form, Button, Card, Placeholder, Icon } from 'semantic-ui-react'
+import { useSelector, useDispatch } from 'react-redux';
+import { Form, Button, Card, Icon } from 'semantic-ui-react';
+import { ADD_FORM, UPDATE_FORM } from '../../store/type';
 import useFormFields from '../../hooks/useFormFields';
-
-import { ADD_PRODUCT, SET_BANNER } from '../../store/type';
-import { newProduct, updateProduct } from '../../api';
 import './Styles.scss';
 
-const ProductForm = ({ deleteForm = null, showAction, product = null, handleBanner, file, formData, handleData }) => {
+const ProductForm = ({ deleteForm = null, showAction, product = null, file, formData }) => {
 
-  // for (let pair of formData.entries()) {
-  //   console.log("Key:", pair[0]+ ', ' + "Value:",pair[1]); 
-  // }
-
-  console.log("formData", formData)
-  
-  let disableName;
-  const dispatch = useDispatch()
-  const [ imageLoader, setImageLoader ] = useState(false)
-  const [ placeholder, setPlaceholder ] = useState(null)
-  const [ fileName, setFileName ] = useState("")
+  const dispatch = useDispatch();
+  const newProducts = useSelector(state => state.product.newProducts);
+  const [ placeholder, setPlaceholder ] = useState(null);
   const [ fields, handleFieldChange ] = useFormFields({
     title: "",
     price: "",
     quantity: ""
-  })
-
-  if (fileName === "") {
-    disableName = true;
-  } else {
-    disableName = false;
-  }
+  });
 
   useEffect(() => {
     if (showAction) {
       setPlaceholder("./images/placeholder-product.png")
       setPlaceholder(URL.createObjectURL(file))
-    } else {
-      // setPlaceholder(product.image_url)
-      // setFile(product.image_url)
     }
-  }, [imageLoader, product, showAction])
-  
-  const sendData = () => {
-    const productInfo = {
-      title: fields.title,
-      price: fields.price,
-      fileName: file.name
-    }
-    handleData(productInfo)
-  }
-  
+  }, [product, showAction, file])
+
 
   useEffect(() => {
-    sendData()
-  }, [])
+    if (!newProducts.find(data => data.get("fileName") === formData.get("fileName"))) {
+      dispatch({ type: ADD_FORM, payload: formData })
+    } else {
+      formData.set("title", fields.title)
+      formData.set("price", fields.price)
+      formData.set("quantity", fields.quantity)
+      dispatch({ type: UPDATE_FORM, payload: formData })
+    }
+  }, [fields, formData, dispatch])
   
     return (
     <div className="productForm">
         <Card className="productForm__card">
           <Card.Content>
-            <img src={`${placeholder}`} className="productForm__picture" />
+            <img src={`${placeholder}`} alt={file.fileName} className="productForm__picture" />
           </Card.Content>
         </Card>
         <div className="productForm__form">
@@ -72,7 +51,7 @@ const ProductForm = ({ deleteForm = null, showAction, product = null, handleBann
             placeholder="Leather Shoes"
             onChange={handleFieldChange}
             />
-          <Form.Group widths='equal'>
+           <Form.Group widths='equal'>             
             <Form.Input 
             name="price"
             fluid 
@@ -80,25 +59,21 @@ const ProductForm = ({ deleteForm = null, showAction, product = null, handleBann
             placeholder="$39.99" 
             onChange={handleFieldChange}
             />
-            {/* <Form.Input 
+            <Form.Input 
             name="quantity"
             fluid 
             label="Quantity" 
             placeholder='2' 
             onChange={handleFieldChange}
             defaultValue={showAction ? "" : fields.quantity}
-            />*/}
+            />
           </Form.Group>
-            {/* <Button type="submit" color="blue" loading={imageLoader}>
-              <Icon name={`${showAction ? "add" : "edit" }`} /> 
-              {showAction ? "Add product" : "Update"}
-            </Button>     */}
-              {
-                showAction && 
-                <Button type="button" color="red" onClick={deleteForm}>
-                  <Icon name='cancel' /> Cancel
-                </Button>    
-              }
+            {
+              showAction && 
+              <Button type="button" color="red" onClick={deleteForm}>
+                <Icon name='cancel' /> Cancel
+              </Button>    
+            }
           </Form.Field>
         </div>
     </div>

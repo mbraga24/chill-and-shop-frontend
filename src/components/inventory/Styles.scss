@@ -10,4 +10,14 @@
     justify-content: center;
     margin: 50px 0;
   }
+
+  &__createBtn {
+    display: flex;
+    justify-content: center;
+    margin: 2em 0;
+  }
+  
+  &--hideCreateBtn {
+    display: none;
+  }
 }

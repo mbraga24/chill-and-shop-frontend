@@ -36,18 +36,13 @@ export const getProducts = () => {
 }
 
 export const newProduct = (formData) => {
-  console.log("NEW PRODUCT ?", formData)
-
-  for (var pair of formData.entries()) {
-    console.log(pair[0]+ ', ' + pair[1]); 
-}
-// return fetch(`${localhost}products`, {
-//     method: "POST",
-//     headers: {
-//       'Authorization': `Bearer ${localStorage.token}`
-//     },
-//     body: formData
-//   }).then(r => r.json())
+  return fetch(`${localhost}products`, {
+      method: "POST",
+      headers: {
+        'Authorization': `Bearer ${localStorage.token}`
+      },
+      body: formData
+    }).then(r => r.json())
 }
 
 export const updateProduct = (productId, formData) => {

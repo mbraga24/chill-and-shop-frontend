@@ -10,9 +10,9 @@ const OrderItem = ({ orderProduct, soldOut = false, quantityOptions = 0, current
 
   const [ open, setOpen ] = useState(false);
   const [ loader, setLoader ] = useState(false);
-  const { product } = orderProduct
-  const sellerName = `${product.seller.first_name} ${product.seller.last_name}`
-  const dispatch = useDispatch()
+  const { product } = orderProduct;
+  const sellerName = `${product.seller.first_name} ${product.seller.last_name}`;
+  const dispatch = useDispatch();
 
   const updateCart = (e, {value}) => {
     updateOrderItem(orderProduct.id, value)

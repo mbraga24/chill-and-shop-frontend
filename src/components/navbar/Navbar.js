@@ -80,10 +80,10 @@ const Navbar = ({ history, fixed }) => {
         <Menu.Item position='right'>
           {
             !currentUser ?
-            <Button as={Link} to="/login" inverted={!currentUser} primary={currentUser}>
+            <Button as={Link} to="/login" inverted={!currentUser} primary={!!currentUser}>
               Log in
             </Button> :
-            <Button as={Link} to="/cart" icon animated='vertical' inverted secondary={true} labelPosition='left'>
+            <Button as={Link} to="/cart" icon animated='vertical' inverted secondary labelPosition='left'>
               <Icon name='shop' />
               {orders.length}
             </Button>
@@ -93,7 +93,7 @@ const Navbar = ({ history, fixed }) => {
               to={`${currentUser ? "/" : "/signup"}`} 
               color={`${currentUser ? "purple" : null}`} 
               inverted={true} 
-              secondary={currentUser}
+              secondary={!!currentUser}
               onClick={currentUser ? handleLogout : null}
               className="navbar__multifunctionBtn"> 
                 {currentUser ? "Log out" : "Sign Up"}
