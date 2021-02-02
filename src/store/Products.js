@@ -47,7 +47,7 @@ const reducer = (state = defaultState, action) => {
         newProducts: [...updatedForms]
       }
     case DELETE_FORM:
-      const filteredForms = state.newProducts.filter(data => data.get("fileName") !== action.payload.get("fileName"))
+      const filteredForms = state.newProducts.filter(data => data.get("fileName") !== action.payload)
       console.log("DELETE_FORM", filteredForms)
       return {
         ...state,

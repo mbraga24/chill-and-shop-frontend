@@ -5,7 +5,9 @@ import { ADD_FORM, UPDATE_FORM } from '../../store/type';
 import useFormFields from '../../hooks/useFormFields';
 import './Styles.scss';
 
-const ProductForm = ({ deleteForm = null, showAction, product = null, file, formData }) => {
+const ProductForm = ({ removeForm, formId, showAction, product = null, file, formData }) => {
+
+  console.log("file PRODUCTFORM", file)
 
   const dispatch = useDispatch();
   const newProducts = useSelector(state => state.product.newProducts);
@@ -16,12 +18,20 @@ const ProductForm = ({ deleteForm = null, showAction, product = null, file, form
     quantity: ""
   });
 
+  const handleRemove = () => {
+    console.log("formId", formId)
+    removeForm(formId);
+    // removeForm( fileValue );
+    // console.log("DELETE e", e);
+    // console.log("DELETE fileValue", fileValue);
+  }
+
   useEffect(() => {
     if (showAction) {
       setPlaceholder("./images/placeholder-product.png")
       setPlaceholder(URL.createObjectURL(file))
     }
-  }, [product, showAction, file])
+  }, [showAction, file])
 
 
   useEffect(() => {
@@ -33,7 +43,7 @@ const ProductForm = ({ deleteForm = null, showAction, product = null, file, form
       formData.set("quantity", fields.quantity)
       dispatch({ type: UPDATE_FORM, payload: formData })
     }
-  }, [fields, formData, dispatch])
+  }, [fields])
   
     return (
     <div className="productForm">
@@ -70,7 +80,7 @@ const ProductForm = ({ deleteForm = null, showAction, product = null, file, form
           </Form.Group>
             {
               showAction && 
-              <Button type="button" color="red" onClick={deleteForm}>
+              <Button type="button" color="red" onClick={handleRemove}>
                 <Icon name='cancel' /> Cancel
               </Button>    
             }
