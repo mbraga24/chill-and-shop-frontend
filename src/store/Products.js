@@ -13,13 +13,12 @@ const reducer = (state = defaultState, action) => {
         products: [...action.payload]
       }
     case ADD_PRODUCT: 
-    console.log("ADD_PRODUCT:", action.payload)
       return {
         ...state,
         products: [action.payload, ...state.products]
       }
     case REMOVE_PRODUCT:
-      const filteredProducts = state.products.filter(p => p.id !== action.payload.id)
+      const filteredProducts = state.products.filter(p => p.id !== action.payload.id);
       return {
         ...state,
         products: [...filteredProducts]
@@ -41,14 +40,13 @@ const reducer = (state = defaultState, action) => {
         } else {
           return data
         }
-      })
+      });
       return {
         ...state,
         newProducts: [...updatedForms]
       }
     case DELETE_FORM:
-      const filteredForms = state.newProducts.filter(data => data.get("fileName") !== action.payload)
-      console.log("DELETE_FORM", filteredForms)
+      const filteredForms = state.newProducts.filter(data => data.get("fileName") !== action.payload);
       return {
         ...state,
         newProducts: [...filteredForms]

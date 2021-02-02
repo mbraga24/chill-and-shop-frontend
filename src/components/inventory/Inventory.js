@@ -14,18 +14,16 @@ const Inventory = ({ handleBanner }) => {
   const newProducts = useSelector(state => state.product.newProducts);
   const [ imageLoader, setImageLoader ] = useState(false);
   const [ createReady, setCreateReady ] = useState(true);
-  const [ files, setFiles ] = useState([]);
   const [ componentForms, setComponentForms ] = useState({});
   const [ sellerProducts, setSellerProducts] = useState([]);
-  const [ productFormList, setProductFormList ] = useState({});
   const dispatch = useDispatch();
 
   const findSellerProducts = useCallback(() => {
     return products.filter(pro => pro.seller.email === currentUser.email)
   }, [products, currentUser])
 
-  function guid() {
-    function s4() {
+  const superId = () => {
+    const s4 = () => {
       return Math.floor((1 + Math.random()) * 0x10000)
         .toString(16)
         .substring(1);
@@ -33,137 +31,44 @@ const Inventory = ({ handleBanner }) => {
     return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
   }
 
-  // const displayProductForms = () => {
-  //   // const currentFormIndex = productFormList.length;
-
-  //   return files.map((file, index) => {
-
-  //     const formData = new FormData();
-  //     formData.append("file", file);
-  //     formData.append("fileName", file.name)
-  //     formData.append("title", "")
-
-  //     // setProductFormList(prevForm => ([<ProductForm 
-  //     //   key={file.name} 
-  //     //   // removeForm={(e) => removeForm(e, (index + currentFormIndex, formData.get("fileName")))}
-  //     //   removeForm={() => removeForm(index, formData.get("fileName"))}
-  //     //   showAction={true}
-  //     //   file={file}
-  //     //   formData={formData}
-  //     // />, ...prevForm]))
-
-  //     return <ProductForm 
-  //       key={file.name} 
-  //       removeForm={(e) => removeForm(e, formData.get("fileName"))}
-  //       showAction={true}
-  //       file={file}
-  //       formData={formData}
-  //     />
-  //   });
-  // }
-
-
-  // const handleImages = (e) => {
-  //   for (let i = 0; i < e.target.files.length; i++) {
-  //     setFiles(prevFile => [...prevFile, e.target.files[i]]);
-  //   }
-  // }
-
-  // this.setState(prevState => ({
-  //   forms: { ...prevState.forms, [newForm.id]: newForm },
-  // }));
-
-  // const handleImages = (e) => {
-  //   const files = e.target.files
-
-    // console.log(Object.keys(e.target.files))
-
-    // for (let index = 0; index < files.length; index++) {
-      // const newForm = { id: guid() }
-      // const formData = new FormData();
-      // formData.append("file", files[index]);
-      // formData.append("fileName", files[index].name)
-      // formData.append("title", "")
-      
-      // const renderForms = () => Object.keys(this.state.forms).map(key => (
-        
-        // setProductFormList(prevForm => ({
-        //   productFormList: {...prevForm.productFormList, 
-        //   [newForm.id]: <ProductForm 
-        //               key={files[index].name} 
-        //               id={.id}
-        //               removeForm={(e) => removeForm(e, formData.get("fileName"))}
-        //               showAction={true}
-        //               file={files[index]}
-        //               formData={formData} />}
-        //   }));
-
-      // ));
-    // }
-  // }
-
   const createIds = (e) => {
-    const files = e.target.files
-    let myFormHash = {}
-    console.log("files.length", files.length)
-    
+    const files = e.target.files  
     for (let index = 0; index < files.length; index++) {
-      const superId = guid()
-      const newForm = { file: files[index], id: superId }
-      // console.log(newForm.file)
-      // console.log(newForm.id)
-      // myFormHash= { ...myFormHash, [superId]: newForm } // => IT WORKS BUT IT DOES NOT ADD NEW ONE
-      // myFormHash= { ...myFormHash, [superId]: newForm } // => IT WORKS BUT IT DOES NOT ADD NEW ONE
-
-      // this.setState(prevState => ({
-      //   forms: { ...prevState.forms, [newForm.id]: newForm },
-      // }));
-      setComponentForms(myFormHash);
+      const newForm = { file: files[index], id: superId() }
+      setComponentForms(prevForms => ({[newForm.id]: newForm, ...prevForms}))
     }
   };
 
-    const removeForm = formId => {
-      console.log("REMOVE FORM", formId)
+    const removeForm = (formId, fileName) => {
       let updatedForms = { ...componentForms };
-      console.log("componentForms", updatedForms)
-      
       delete updatedForms[formId];
-      setComponentForms(updatedForms)
+      setComponentForms(updatedForms);
+      dispatch({ type: DELETE_FORM, payload: fileName });
     }
 
-
-      
     const renderForms = () => Object.keys(componentForms).map((key, index) => {
-
-        console.log("index", index)
-        console.log("forms[key].file", componentForms[key].file)
-        console.log("forms[key].fileName", componentForms[key].file.name)
-        console.log("forms[key].id", componentForms[key].id)
+      const formId = componentForms[key].id;
+      const file = componentForms[key].file;
+      const fileName = componentForms[key].file.name;
 
       const formData = new FormData();
-      formData.append("file", componentForms[key].file);
-      formData.append("fileName", componentForms[key].file.name)
+      formData.append("file", file);
+      formData.append("fileName", fileName)
       formData.append("title", "")
 
       return <ProductForm 
-        key={componentForms[key].id} 
+        key={formId} 
         removeForm={removeForm}
-        formId={componentForms[key].id}
-        showAction={true}
-        file={componentForms[key].file}
+        formId={formId}
+        file={file}
         formData={formData} />
 
     });
 
-
   useEffect(() => {
-    setSellerProducts(findSellerProducts())
-    // if (files.length !== 0) {
-    //   console.log("FILES LENGTH")
-      // setProductFormList([...displayProductForms()])
-    // }
-    // setCreateReady(productFormList.length === 0)
-  }, [findSellerProducts])
+    setSellerProducts(findSellerProducts());
+    setCreateReady(Object.keys(componentForms).length === 0);
+  }, [findSellerProducts, componentForms])
 
   const displayInventory = () => {
     return sellerProducts.map(thisProduct => (
@@ -186,14 +91,12 @@ const Inventory = ({ handleBanner }) => {
         handleBanner();
         dispatch({ type: ADD_PRODUCT, payload: product });
         dispatch({ type: SET_BANNER, payload: confirmation });
-        setProductFormList([])
         dispatch({ type: SET_FORM, payload: [] });
+        setComponentForms({})
         setImageLoader(false);
       })
     }
   }
-
-  console.log("componentForms", componentForms)
 
     return (
       <Container className="inventory">
@@ -221,8 +124,9 @@ const Inventory = ({ handleBanner }) => {
             <Button 
               type="submit" 
               color="blue" 
+              size="big"
               loading={imageLoader}>
-              Create Products
+              Add to Inventory
             </Button>   
           </div>
             {!createReady && <Divider/>}

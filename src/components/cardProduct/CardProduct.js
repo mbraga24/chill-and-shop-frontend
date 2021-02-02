@@ -39,16 +39,14 @@ const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityO
 
   const handleDelete = () => {
     setLoader(true)
+    handleBanner()
     deleteProduct(thisProduct.id, localStorage.token)
     .then(data => {
       const { product, confirmation } = data;
-      dispatch({ type: REMOVE_PRODUCT, payload: product })
+      dispatch({ type: REMOVE_PRODUCT, payload: product });
       dispatch({ type: SET_BANNER, payload: confirmation });
-      setTimeout(() => {
-        handleBanner()
-        setLoader(false)
-        setOpenDelete(false)
-      }, [1000])
+      setLoader(false)
+      setOpenDelete(false)
     })
   }
 

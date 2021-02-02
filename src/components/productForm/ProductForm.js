@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Button, Card, Icon } from 'semantic-ui-react';
 import { ADD_FORM, UPDATE_FORM } from '../../store/type';
 import useFormFields from '../../hooks/useFormFields';
 import './Styles.scss';
 
-const ProductForm = ({ removeForm, formId, showAction, product = null, file, formData }) => {
-
-  console.log("file PRODUCTFORM", file)
+const ProductForm = ({ removeForm, formId, file, formData }) => {
 
   const dispatch = useDispatch();
   const newProducts = useSelector(state => state.product.newProducts);
@@ -19,22 +17,15 @@ const ProductForm = ({ removeForm, formId, showAction, product = null, file, for
   });
 
   const handleRemove = () => {
-    console.log("formId", formId)
-    removeForm(formId);
-    // removeForm( fileValue );
-    // console.log("DELETE e", e);
-    // console.log("DELETE fileValue", fileValue);
+    removeForm(formId, file.name);
   }
 
   useEffect(() => {
-    if (showAction) {
-      setPlaceholder("./images/placeholder-product.png")
-      setPlaceholder(URL.createObjectURL(file))
-    }
-  }, [showAction, file])
+    setPlaceholder("./images/placeholder-product.png");
+    setPlaceholder(URL.createObjectURL(file));
+  }, [file])
 
-
-  useEffect(() => {
+  const handleData = useCallback(() => {
     if (!newProducts.find(data => data.get("fileName") === formData.get("fileName"))) {
       dispatch({ type: ADD_FORM, payload: formData })
     } else {
@@ -43,6 +34,10 @@ const ProductForm = ({ removeForm, formId, showAction, product = null, file, for
       formData.set("quantity", fields.quantity)
       dispatch({ type: UPDATE_FORM, payload: formData })
     }
+  }, [newProducts, formData, dispatch, fields])
+
+  useEffect(() => {
+    handleData();
   }, [fields])
   
     return (
@@ -75,15 +70,11 @@ const ProductForm = ({ removeForm, formId, showAction, product = null, file, for
             label="Quantity" 
             placeholder='2' 
             onChange={handleFieldChange}
-            defaultValue={showAction ? "" : fields.quantity}
             />
           </Form.Group>
-            {
-              showAction && 
-              <Button type="button" color="red" onClick={handleRemove}>
-                <Icon name='cancel' /> Cancel
-              </Button>    
-            }
+            <Button type="button" color="red" size="small" onClick={handleRemove}>
+              <Icon name='cancel' /> Remove Product
+            </Button>    
           </Form.Field>
         </div>
     </div>
