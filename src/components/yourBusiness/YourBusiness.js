@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 import { Container, Card, Image, Grid, Header, Icon, Divider } from 'semantic-ui-react'
-import OrderItemPlaced from '../orderItemPlaced/OrderItemPlaced';
 import './Styles.scss';
 
 const YourBusiness = props => {
