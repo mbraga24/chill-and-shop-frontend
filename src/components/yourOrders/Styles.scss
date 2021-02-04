@@ -1,13 +1,12 @@
-.yourOrders {
-  // border: 2px solid red;
-  
+.ui.container.yourOrders {
+
+  &--ordersPage {
+    width: 65%;
+  }
+
   &__Header {
     margin: 15px;
     font-size: 42px;
-  }
-
-  &__grid {
-    // border: 2px solid blue;
   }
 
 }

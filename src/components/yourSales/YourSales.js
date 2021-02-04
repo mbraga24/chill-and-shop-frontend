@@ -1,14 +1,25 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import { Container, Card, Image, Grid, Header, Icon, Divider } from 'semantic-ui-react'
+import React from 'react';
+// import { useSelector } from 'react-redux';
+import { Container, Grid, Header, Divider } from 'semantic-ui-react'
 import OrderItemCard from '../orderItemCard/OrderItemCard';
 import './Styles.scss';
 
 const YourSales = props => {
 
-  const currentUser = useSelector(state => state.app.currentUser)
+  // const currentUser = useSelector(state => state.app.currentUser)
   
+  const renderIncomingOrders = () => {
+    return [1,2,3].map(oder => {
+      return <OrderItemCard sales={true}/> 
+    })
+  }
+
+  const renderShippedOrders = () => {
+    return [1,2,3].map(oder => {
+      return <OrderItemCard archive={true}/> 
+    })
+  }
+
   return (
     <Container className="yourSales">
         <Header as='h1' textAlign="center" color="blue" className="yourSales__Header">Your Sales</Header>
@@ -17,18 +28,13 @@ const YourSales = props => {
         <Grid>
           <Grid.Row>
             <Grid.Column>
-              <OrderItemCard/>
-              <OrderItemCard/>
-              <OrderItemCard/>
-              <OrderItemCard/>
+              {renderIncomingOrders()}
             </Grid.Column>
           </Grid.Row>
           <Header as='h2' textAlign="left" color="blue" className="yourSales__Header">Shipped Orders</Header>
           <Grid.Row>
             <Grid.Column>
-              <OrderItemCard/>
-              <OrderItemCard/>
-              <OrderItemCard/>
+              {renderShippedOrders()}
             </Grid.Column>
           </Grid.Row>
         </Grid>
@@ -36,4 +42,4 @@ const YourSales = props => {
     );
 }
 
-export default withRouter(YourSales);
+export default YourSales;

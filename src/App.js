@@ -120,7 +120,7 @@ const App = () => {
             <Route path="/inventory" render={ () => <Inventory handleBanner={handleBanner} /> } />
             <Route path="/products" render={ () => <Products handleBanner={handleBanner} /> } />
             <Route path="/cart" render={ () => <Cart handleBanner={handleBanner}/> } />
-            <Route path="/orders" render={ () => <YourOrders/> } />
+            <Route path="/orders" render={ () => <YourOrders fullscreen={true}/> } />
           </React.Fragment> :
           <React.Fragment>
             <Route path="/" exact render={ () => <Home setFixed={setFixed}/> } />

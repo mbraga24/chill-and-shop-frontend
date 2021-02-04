@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Container, Grid, Menu, Segment } from 'semantic-ui-react'
 import Profile from '../profile/Profile';
 import YourOrders from '../yourOrders/YourOrders';

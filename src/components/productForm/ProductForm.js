@@ -20,11 +20,6 @@ const ProductForm = ({ removeForm, formId, file, formData }) => {
     removeForm(formId, file.name);
   }
 
-  useEffect(() => {
-    setPlaceholder("./images/placeholder-product.png");
-    setPlaceholder(URL.createObjectURL(file));
-  }, [file])
-
   const handleData = useCallback(() => {
     if (!newProducts.find(data => data.get("fileName") === formData.get("fileName"))) {
       dispatch({ type: ADD_FORM, payload: formData })
@@ -35,6 +30,11 @@ const ProductForm = ({ removeForm, formId, file, formData }) => {
       dispatch({ type: UPDATE_FORM, payload: formData })
     }
   }, [newProducts, formData, dispatch, fields])
+
+  useEffect(() => {
+    setPlaceholder("./images/placeholder-product.png");
+    setPlaceholder(URL.createObjectURL(file));
+  }, [file])
 
   useEffect(() => {
     handleData();

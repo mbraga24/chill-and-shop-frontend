@@ -1,25 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
-import { Container, Card, Image, Grid, Header, Icon, Divider } from 'semantic-ui-react'
+import React from 'react';
+// import { useSelector } from 'react-redux';
+import { Container, Grid, Header, Divider } from 'semantic-ui-react'
 import OrderItemCard from '../orderItemCard/OrderItemCard';
 import './Styles.scss';
 
-const YourOrders = props => {
+const YourOrders = ({ fullscreen = false }) => {
 
-  const currentUser = useSelector(state => state.app.currentUser)
+  // const currentUser = useSelector(state => state.app.currentUser)
+
+  const renderYourOrders = () => {
+    return [1,2,3].map(oder => {
+      return <OrderItemCard sales={false}/> 
+    })
+  }
 
   return (
-    <Container className="yourOrders">
+    <Container className={"yourOrders" + (fullscreen ? "--ordersPage" : "")}>
       <Header as='h1' textAlign="center" color="blue" className="yourOrders__Header">Your Orders</Header>
       <Divider />
       <Grid className="yourOrders__grid">
         <Grid.Row>
           <Grid.Column>
-            <OrderItemCard/>
-            <OrderItemCard/>
-            <OrderItemCard/>
-            <OrderItemCard/>
+            {renderYourOrders()}
           </Grid.Column>
         </Grid.Row>
       </Grid>
@@ -27,4 +29,4 @@ const YourOrders = props => {
     );
 }
 
-export default withRouter(YourOrders);
+export default YourOrders;

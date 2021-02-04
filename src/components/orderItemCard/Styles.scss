@@ -42,8 +42,12 @@
     padding: 1em;
   }
 
-  &__buttonContainer {
+  .buttonContainer {
     padding: 0 1em;
+    width: 100%;
+    &--seller {
+      width: 45%;
+    }
   }
 
   .ui.button, &__button {
