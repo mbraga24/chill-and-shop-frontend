@@ -1,12 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Container, Grid, Menu, Segment } from 'semantic-ui-react'
+import Profile from '../profile/Profile';
+import YourOrders from '../yourOrders/YourOrders';
+import YourSales from '../yourSales/YourSales';
+import YourBusiness from '../yourBusiness/YourBusiness';
 
 import './Styles.scss';
 
 const Dashboard = () => {
 
   const [ activeItem, setActiveItem ] = useState("")
-  const  handleItemClick = (e, { name }) => setActiveItem(name)
+  const  handleItemClick = (e, { name }) => setActiveItem(name) 
+  
+  const displayTabComponent = () => {
+    switch(activeItem) {
+      case "profile":
+        return <Profile/>
+      case "sales":
+        return <YourSales />
+      case "business":
+        return <YourBusiness/>
+      case "orders":
+        return <YourOrders/>
+      default:
+        return <Profile/>
+    }
+  }
 
     return (
       <Container className="dashboard">
@@ -20,21 +39,26 @@ const Dashboard = () => {
                 onClick={handleItemClick}
               />
               <Menu.Item
-                name='history'
-                active={activeItem === 'history'}
+                name='orders'
+                active={activeItem === 'orders'}
                 onClick={handleItemClick}
               />
               <Menu.Item
-                name='finance'
-                active={activeItem === 'finance'}
+                name='business'
+                active={activeItem === 'business'}
+                onClick={handleItemClick}
+              />
+              <Menu.Item
+                name='sales'
+                active={activeItem === 'sales'}
                 onClick={handleItemClick}
               />
             </Menu>
           </Grid.Column>
 
           <Grid.Column stretched width={12}>
-            <Segment>
-              
+            <Segment> 
+              {displayTabComponent()}
             </Segment>
           </Grid.Column>
         </Grid>

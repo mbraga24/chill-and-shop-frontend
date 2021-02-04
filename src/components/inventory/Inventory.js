@@ -4,6 +4,7 @@ import { Container, Grid, Button, Divider, Form, Icon } from 'semantic-ui-react'
 import { ADD_PRODUCT, DELETE_FORM, SET_BANNER, SET_FORM } from '../../store/type';
 import CardProduct from '../cardProduct/CardProduct';
 import ProductForm from '../productForm/ProductForm';
+import { superId } from '../../helpers';
 import { newProduct } from '../../api';
 import './Styles.scss';
 
@@ -22,15 +23,6 @@ const Inventory = ({ handleBanner }) => {
     return products.filter(pro => pro.seller.email === currentUser.email)
   }, [products, currentUser])
 
-  const superId = () => {
-    const s4 = () => {
-      return Math.floor((1 + Math.random()) * 0x10000)
-        .toString(16)
-        .substring(1);
-    }
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
-  }
-
   const createIds = (e) => {
     const files = e.target.files  
     for (let index = 0; index < files.length; index++) {
@@ -46,7 +38,7 @@ const Inventory = ({ handleBanner }) => {
       dispatch({ type: DELETE_FORM, payload: fileName });
     }
 
-    const renderForms = () => Object.keys(componentForms).map((key, index) => {
+    const displayForms = () => Object.keys(componentForms).map((key) => {
       const formId = componentForms[key].id;
       const file = componentForms[key].file;
       const fileName = componentForms[key].file.name;
@@ -110,7 +102,6 @@ const Inventory = ({ handleBanner }) => {
           <input 
             type="file" 
             id="files" 
-            // name="files[]" 
             name="files" 
             multiple
             hidden
@@ -119,7 +110,7 @@ const Inventory = ({ handleBanner }) => {
           />
         </div>
         <Form onSubmit={onFormSubmit}>
-          {true && renderForms()}
+          {!createReady && displayForms()}
           <div className={`inventory__createBtn ${createReady && "inventory--hideCreateBtn"}`}>
             <Button 
               type="submit" 

@@ -75,6 +75,12 @@ const Navbar = ({ history, fixed }) => {
                 active={activeItem === 'inventory'}
                 onClick={handleItemClick}>Inventory</Menu.Item>
             }
+            <Menu.Item 
+              as={Link}
+              to="/orders"
+              name="orders"
+              active={activeItem === 'orders'}
+              onClick={handleItemClick}>Orders</Menu.Item>
           </>
         }
         <Menu.Item position='right'>

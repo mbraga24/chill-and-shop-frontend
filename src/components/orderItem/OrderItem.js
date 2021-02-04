@@ -17,9 +17,7 @@ const OrderItem = ({ orderProduct, soldOut = false, quantityOptions = 0, current
   const updateCart = (e, {value}) => {
     updateOrderItem(orderProduct.id, value)
     .then(data => {
-      console.log("UPDATE CART", data)
       const { orderItem, orderTotal, confirmation } = data;
-      console.log("orderItem", orderItem)
       handleBanner();
       dispatch({ type: UPDATE_TOTAL_ORDER, payload: orderTotal });
       dispatch({ type: UPDATE_ORDER, payload: orderItem });
@@ -42,9 +40,6 @@ const OrderItem = ({ orderProduct, soldOut = false, quantityOptions = 0, current
       }, [1500])
     })
   }
-
-  console.log("soldOut", soldOut)
-  console.log("quantityOptions", quantityOptions)
   
     return (
       <Grid.Column className="orderItem" id="cardContainer">
@@ -78,7 +73,7 @@ const OrderItem = ({ orderProduct, soldOut = false, quantityOptions = 0, current
             </Card.Description>
             <Divider/>
             <Card.Description>
-              Total for this total: ${orderProduct.total_price}
+              Total for this order: ${orderProduct.total_price}
             </Card.Description>
           </Card.Content>
           <Card.Content extra>

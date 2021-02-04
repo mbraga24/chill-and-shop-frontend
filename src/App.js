@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import Inventory from './components/inventory/Inventory';
 import Cart from './components/cart/Cart';
+import YourOrders from './components/yourOrders/YourOrders';
 import Products from './components/products/Products';
 import Home from './components/home/Home';
 import LoginForm from './components/loginForm/LoginForm';
@@ -115,10 +116,11 @@ const App = () => {
         {
           currentUser ?
           <React.Fragment>
-            <Route path="/dashboard" render={ () => <Dashboard /> } />
+            <Route path="/dashboard" render={ () => <Dashboard/> } />
             <Route path="/inventory" render={ () => <Inventory handleBanner={handleBanner} /> } />
             <Route path="/products" render={ () => <Products handleBanner={handleBanner} /> } />
             <Route path="/cart" render={ () => <Cart handleBanner={handleBanner}/> } />
+            <Route path="/orders" render={ () => <YourOrders/> } />
           </React.Fragment> :
           <React.Fragment>
             <Route path="/" exact render={ () => <Home setFixed={setFixed}/> } />
