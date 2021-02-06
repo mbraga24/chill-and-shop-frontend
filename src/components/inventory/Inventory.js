@@ -38,7 +38,7 @@ const Inventory = ({ handleBanner }) => {
       dispatch({ type: DELETE_FORM, payload: fileName });
     }
 
-    const displayForms = () => Object.keys(componentForms).map((key) => {
+    const renderForms = () => Object.keys(componentForms).map((key) => {
       const formId = componentForms[key].id;
       const file = componentForms[key].file;
       const fileName = componentForms[key].file.name;
@@ -110,7 +110,7 @@ const Inventory = ({ handleBanner }) => {
           />
         </div>
         <Form onSubmit={onFormSubmit}>
-          {!createReady && displayForms()}
+          {!createReady && renderForms()}
           <div className={`inventory__createBtn ${createReady && "inventory--hideCreateBtn"}`}>
             <Button 
               type="submit" 

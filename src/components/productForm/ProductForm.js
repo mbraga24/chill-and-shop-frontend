@@ -41,14 +41,14 @@ const ProductForm = ({ removeForm, formId, file, formData }) => {
   }, [fields])
   
     return (
-    <div className="productForm">
-        <Card className="productForm__card">
+      <div className="productForm">
+        <Card>
           <Card.Content>
             <img src={`${placeholder}`} alt={file.fileName} className="productForm__picture" />
           </Card.Content>
         </Card>
         <div className="productForm__form">
-          <Form.Field>
+          <Form.Field className="productForm__formField">
             <Form.Input
             name="title"
             fluid
@@ -56,7 +56,7 @@ const ProductForm = ({ removeForm, formId, file, formData }) => {
             placeholder="Leather Shoes"
             onChange={handleFieldChange}
             />
-           <Form.Group widths='equal'>             
+            <Form.Group widths='equal'>             
             <Form.Input 
             name="price"
             fluid 
@@ -72,12 +72,14 @@ const ProductForm = ({ removeForm, formId, file, formData }) => {
             onChange={handleFieldChange}
             />
           </Form.Group>
-            <Button type="button" color="red" size="small" onClick={handleRemove}>
+          <div className="productForm__btnWrapper">
+            <Button type="button" color="red" onClick={handleRemove}>
               <Icon name='cancel' /> Remove Product
             </Button>    
+          </div>
           </Form.Field>
         </div>
-    </div>
+      </div>
   )
 }
 
