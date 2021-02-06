@@ -1,7 +1,7 @@
 import React from 'react';
 // import { useSelector } from 'react-redux';
 import { Container, Grid, Header, Divider } from 'semantic-ui-react'
-import OrderItemCard from '../orderItemCard/OrderItemCard';
+import CardOrder from '../cardOrder/CardOrder';
 import './Styles.scss';
 
 const YourOrders = ({ fullscreen = false }) => {
@@ -10,7 +10,7 @@ const YourOrders = ({ fullscreen = false }) => {
 
   const renderYourOrders = () => {
     return [1,2,3].map(oder => {
-      return <OrderItemCard sales={false}/> 
+      return <CardOrder sales={false}/> 
     })
   }
 

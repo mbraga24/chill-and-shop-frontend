@@ -1,7 +1,7 @@
 import React from 'react';
 // import { useSelector } from 'react-redux';
 import { Container, Grid, Header, Divider } from 'semantic-ui-react'
-import OrderItemCard from '../orderItemCard/OrderItemCard';
+import CardOrder from '../cardOrder/CardOrder';
 import './Styles.scss';
 
 const YourSales = props => {
@@ -10,13 +10,13 @@ const YourSales = props => {
   
   const renderIncomingOrders = () => {
     return [1,2,3].map(oder => {
-      return <OrderItemCard sales={true}/> 
+      return <CardOrder sales={true}/> 
     })
   }
 
   const renderShippedOrders = () => {
     return [1,2,3].map(oder => {
-      return <OrderItemCard archive={true}/> 
+      return <CardOrder archive={true}/> 
     })
   }
 

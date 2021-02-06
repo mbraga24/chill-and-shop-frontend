@@ -140,7 +140,8 @@ const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityO
             >
               <Header icon='edit' content='Update Product' />
               <Modal.Content>
-                <ProductForm showAction={false} product={thisProduct}/>
+                Form goes here
+                {/* <ProductForm showAction={false} product={thisProduct}/> */}
               </Modal.Content>
             </Modal>
           </Card.Content>
