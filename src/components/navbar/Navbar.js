@@ -40,11 +40,11 @@ const Navbar = ({ history, fixed }) => {
   
   return (
     <Menu
-      fixed={fixed ? 'top' : null}
+      // fixed={fixed ? 'top' : null}
       inverted={!currentUser}
       pointing={!fixed}
       secondary={!fixed}
-      className={`${currentUser ? "activeUser" : "inactiveUser" } navbar`}
+      className={`${currentUser ? "activeUser" : "inactiveUser" } myNavbar`}
       size='large'
     >
       <Container>
@@ -101,7 +101,7 @@ const Navbar = ({ history, fixed }) => {
               inverted={true} 
               secondary={!!currentUser}
               onClick={currentUser ? handleLogout : null}
-              className="navbar__multifunctionBtn"> 
+              className="myNavbar__btn-signup-logout"> 
                 {currentUser ? "Log out" : "Sign Up"}
               </Button>
         </Menu.Item>

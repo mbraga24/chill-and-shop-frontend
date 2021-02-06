@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Button, Container } from 'semantic-ui-react';
+import { Button } from 'semantic-ui-react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faStoreAlt, faDoorOpen } from '@fortawesome/free-solid-svg-icons'
@@ -12,7 +12,7 @@ const HomepageHeading = ({ headers, currentUser }) => {
   const iconDoor = <FontAwesomeIcon icon={faDoorOpen} size="1x" />
 
   return(
-    <Container text className="homepageHeading">
+    <div text className="homepageHeading">
       <h1 className="homepageHeading__mainHeader">{headers.header}</h1>
       <h2 className="homepageHeading__callAction">{headers.callAction}</h2>
       {
@@ -26,7 +26,7 @@ const HomepageHeading = ({ headers, currentUser }) => {
           </Button>
         </div>
       }
-    </Container>
+    </div>
   )
 }
 

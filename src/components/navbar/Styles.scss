@@ -1,5 +1,6 @@
-.navbar {
-  &__multifunctionBtn {
+.myNavbar {
+
+  .ui.button, &__btn-signup-logout {
     margin-left: 1em!important;
   }
 }

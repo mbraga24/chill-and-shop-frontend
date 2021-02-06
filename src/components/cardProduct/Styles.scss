@@ -1,7 +1,5 @@
 .cardItem {
-  &__card {
-    height: 100%;
-  }
+  width: 100%;
 
   &__image {
     height: 200px;
@@ -9,8 +7,4 @@
     background-position: center;
     background-repeat: no-repeat;
   }
-}
-
-#cardContainer {
-  margin-bottom: 20px;
 }

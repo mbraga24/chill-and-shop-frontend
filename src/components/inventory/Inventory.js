@@ -64,12 +64,14 @@ const Inventory = ({ handleBanner }) => {
 
   const displayInventory = () => {
     return sellerProducts.map(thisProduct => (
-      <CardProduct 
-        key={`${thisProduct.title}-${thisProduct.id}`} 
-        thisProduct={thisProduct} 
-        currentUser={currentUser} 
-        handleBanner={handleBanner}
-      />
+      <Grid.Column>
+        <CardProduct 
+          key={`${thisProduct.title}-${thisProduct.id}`} 
+          thisProduct={thisProduct} 
+          currentUser={currentUser} 
+          handleBanner={handleBanner}
+        />
+      </Grid.Column>
     ))
   }
 
@@ -122,7 +124,7 @@ const Inventory = ({ handleBanner }) => {
           </div>
             {!createReady && <Divider/>}
         </Form>
-        <Grid>
+        <Grid stackable>
           <Grid.Row columns={4}>
             {displayInventory()}
           </Grid.Row>

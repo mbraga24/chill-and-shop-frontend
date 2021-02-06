@@ -68,11 +68,9 @@ const Product = ({ handleBanner }) => {
             onChange={handleChange}
             />
         </Form>
-        <Grid>
-          <Grid.Row columns={4}>
+        <div className="products__gridGallery">
             {displayInventory()}
-          </Grid.Row>
-        </Grid>
+        </div>
       </Container>
   )
 }

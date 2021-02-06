@@ -1,20 +1,17 @@
 .home {
   position: relative;
 
-  &__segment {
-    background-position: center !important;
-    background-size: cover !important;
+  .ui.inverted.segment, &__segment {
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
   }
 
-  &__userInactive {
-    background-image: linear-gradient(#0000002d, #00000088), url("../../assets/wallpaper-1.jpg") !important;
+  .ui.inverted.segment, &__userInactive {
+    background-image: linear-gradient(#0000002d, #00000088), url("../../assets/wallpaper-1.jpg");
   }
 
   &__userActive {
     background-image: none;
-  }
-
-  &__button {
-    margin-left: 0.5em !important;
   }
 }
