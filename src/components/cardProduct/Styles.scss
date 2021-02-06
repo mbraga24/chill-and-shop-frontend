@@ -1,5 +1,12 @@
+@import '../../styles/utils/breakpoints.scss';
+
 .cardItem {
   width: 100%;
+
+  // @media only screen and (max-width: $mobile) {
+  //   padding: 0;
+  //   margin: 0 auto;
+  // } 
 
   &__image {
     height: 200px;
