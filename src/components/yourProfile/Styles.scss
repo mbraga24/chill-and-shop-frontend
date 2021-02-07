@@ -1,0 +1,38 @@
+.yourProfile {
+  // ================================================================================
+  //                               WORK IN PROGRESS...
+  // ================================================================================
+
+
+  // &__Circular {
+  //   width: 150px;
+  //   height: 150px;
+  //   border-radius: 50%;
+  //   position: relative;
+  //   overflow: hidden;
+  // }
+
+  &__Header {
+    margin: 15px;
+    font-size: 42px;
+  }
+
+  &__AlignImage {
+    margin: 0 auto;
+    margin-top: 20px;
+  }
+
+  // &__CircularImage {
+  //   min-width: 100%;
+  //   min-height: 100%;
+  //   width: auto;
+  //   height: auto;
+  //   position: absolute;
+  //   left: 50%;
+  //   top: 50%;
+  //   -webkit-transform: translate(-50%, -50%);
+  //   -moz-transform: translate(-50%, -50%);
+  //   -ms-transform: translate(-50%, -50%);
+  //   transform: translate(-50%, -50%);
+  // }
+}
