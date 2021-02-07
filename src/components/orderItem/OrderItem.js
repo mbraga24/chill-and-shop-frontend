@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Modal, Header, Grid, Card, Icon, Button, Dropdown, Divider } from 'semantic-ui-react'
-
 import { deleteOrderItem, updateOrderItem } from '../../api';
 import { REMOVE_ORDER, UPDATE_TOTAL_ORDER, SET_BANNER, UPDATE_ORDER } from '../../store/type';
+import ModalQuestion from '../modalQuestion/ModalQuestion';
 import './Styles.scss';
 
 const OrderItem = ({ orderProduct, soldOut = false, quantityOptions = 0, currentUser, handleBanner }) => {
 
-  const [ open, setOpen ] = useState(false);
+  const [ openDelete, setOpenDelete ] = useState(false);
   const [ loader, setLoader ] = useState(false);
   const { product } = orderProduct;
   const sellerName = `${product.seller.first_name} ${product.seller.last_name}`;
@@ -35,7 +35,7 @@ const OrderItem = ({ orderProduct, soldOut = false, quantityOptions = 0, current
         dispatch({ type: REMOVE_ORDER, payload: orderItem.id });
         dispatch({ type: UPDATE_TOTAL_ORDER, payload: orderTotal });
         dispatch({ type: SET_BANNER, payload: confirmation });
-        setOpen(false);
+        setOpenDelete(false);
         setLoader(false);
       }, [1500])
     })
@@ -85,37 +85,7 @@ const OrderItem = ({ orderProduct, soldOut = false, quantityOptions = 0, current
           {
             currentUser && 
             <Card.Content extra>
-              <Modal
-                closeIcon
-                size="mini"
-                dimmer={"inverted"}
-                open={open}
-                trigger={
-                  <Button inverted color="red" icon onClick={() => setOpen(true)}>
-                    <Icon name='remove' /> Remove order
-                  </Button>
-                }
-                onClose={() => setOpen(false)}
-                onOpen={() => setOpen(true)}
-              >
-                <Header icon='trash' content='Please confirm' />
-                <Modal.Content>
-                  <p>
-                    Are you sure you want to remove this item from your cart?
-                  </p>
-                </Modal.Content>
-                <Modal.Actions>
-                  {
-                  !loader && 
-                  <Button color='red' onClick={() => setOpen(false)}>
-                    <Icon name='remove' /> No
-                  </Button>
-                  }
-                  <Button color='green' loading={loader} onClick={removeFromCart}>
-                    <Icon name='checkmark' /> Yes
-                  </Button>
-                </Modal.Actions>
-              </Modal>
+              <ModalQuestion deleteAction={true} cartAction={true} performAction={removeFromCart} openModal={openDelete} setOpenModal={setOpenDelete} loader={loader}/>
             </Card.Content>
           }
         </Card>

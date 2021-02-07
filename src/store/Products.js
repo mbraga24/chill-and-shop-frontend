@@ -18,6 +18,7 @@ const reducer = (state = defaultState, action) => {
         products: [action.payload, ...state.products]
       }
     case REMOVE_PRODUCT:
+      console.log("action.payload", action.payload)
       const filteredProducts = state.products.filter(p => p.id !== action.payload.id);
       return {
         ...state,

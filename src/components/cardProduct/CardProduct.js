@@ -1,54 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Modal, Header, Card, Icon, Button, Dropdown } from 'semantic-ui-react'
-import { deleteProduct, createOrder } from '../../api';
-import { REMOVE_PRODUCT, SET_BANNER, ADD_ORDER, UPDATE_TOTAL_ORDER } from '../../store/type';
-import ProductForm from '../productForm/ProductForm'
+import { Card, Icon, Button, Dropdown } from 'semantic-ui-react';
+import ModalQuestion from '../modalQuestion/ModalQuestion';
 
 import './Styles.scss';
 
-const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityOptions = 0, currentUser, handleBanner }) => {
+const CardProduct = ({ thisProduct, currentUser, loader, removeProduct, updateProduct, selected = false, soldOut = false, quantityOptions = 0, addToShoppingCart }) => {
 
   let isAvailable = soldOut || selected ? true : false;
   let cartButtonOptions = soldOut ? "Sold out" : selected ? "Added to cart" : <Icon name='shopping cart' />;
   const [ openDelete, setOpenDelete ] = useState(false);
   const [ openUpdate, setOpenUpdate ] = useState(false);
   const [ notShopper, setNotShopper ] = useState(false);
-  const [ loader, setLoader ] = useState(false);
   const [ quantity, setQuantity ] = useState(1);
-  const { seller } = thisProduct
+  const { seller } = thisProduct;
 
-  const dispatch = useDispatch()
-  
+
+  const handleAddToCart = () => addToShoppingCart(thisProduct.id, quantity)
+
+  const handleDelete = () => {
+    openDelete && setOpenDelete(false);
+    removeProduct(thisProduct.id);
+  }
+
+  const handleUpdate = () => {
+    console.log("handling update......")
+    updateProduct();
+  }
+
   useEffect(() => {
-    setNotShopper(seller.email !== currentUser.email)
+    setNotShopper(seller.email !== currentUser.email);
   }, [notShopper, currentUser, seller])
 
   const chooseQuantity = (e, {value}) => {setQuantity(value)};
-
-  const addToCart = (item) => {
-    createOrder(item.id, quantity)
-    .then(newOrder => {
-      const { orderItem, orderTotal, confirmation } = newOrder;
-      handleBanner();
-      dispatch({ type: ADD_ORDER, payload: orderItem });
-      dispatch({ type: UPDATE_TOTAL_ORDER, payload: orderTotal });
-      dispatch({ type: SET_BANNER, payload: confirmation });
-    })
-  }
-
-  const handleDelete = () => {
-    setLoader(true)
-    handleBanner()
-    deleteProduct(thisProduct.id, localStorage.token)
-    .then(data => {
-      const { product, confirmation } = data;
-      dispatch({ type: REMOVE_PRODUCT, payload: product });
-      dispatch({ type: SET_BANNER, payload: confirmation });
-      setLoader(false)
-      setOpenDelete(false)
-    })
-  }
 
     return (
       <Card className="cardItem">
@@ -84,7 +67,7 @@ const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityO
                 options={quantityOptions} 
                 onChange={chooseQuantity}
               />
-              <Button floated='right' color="blue" disabled={isAvailable} icon onClick={() => addToCart(thisProduct)}>
+              <Button floated='right' color="blue" disabled={isAvailable} icon onClick={handleAddToCart}>
                 {cartButtonOptions}
               </Button>
             </>
@@ -94,56 +77,8 @@ const CardProduct = ({ thisProduct, selected = false, soldOut = false, quantityO
         {
           currentUser && !notShopper && 
           <Card.Content textAlign='center' extra>
-            <Modal
-              closeIcon
-              size="mini"
-              dimmer={"inverted"}
-              open={openDelete}
-              trigger={
-                <Button inverted color="red" icon>
-                  <Icon name='trash' />
-                </Button>
-              }
-              onClose={() => setOpenDelete(false)}
-              onOpen={() => setOpenDelete(true)}
-            >
-              <Header icon='trash' content='Please confirm' />
-              <Modal.Content>
-                <p>
-                  Are you sure you want to delete this product?
-                </p>
-              </Modal.Content>
-              <Modal.Actions>
-                {
-                !loader && 
-                <Button color='red' onClick={() => setOpenDelete(false)}>
-                  <Icon name='remove' /> No
-                </Button>
-                }
-                <Button color='green' loading={loader} onClick={handleDelete}>
-                  <Icon name='checkmark' /> Yes
-                </Button>
-              </Modal.Actions>
-            </Modal>
-            <Modal
-              closeIcon
-              size="small"
-              dimmer={"inverted"}
-              open={openUpdate}
-              trigger={
-                <Button inverted color="green" icon>
-                  <Icon name='edit' />
-                </Button>
-              }
-              onClose={() => setOpenUpdate(false)}
-              onOpen={() => setOpenUpdate(true)}
-            >
-              <Header icon='edit' content='Update Product' />
-              <Modal.Content>
-                Form goes here
-                {/* <ProductForm showAction={false} product={thisProduct}/> */}
-              </Modal.Content>
-            </Modal>
+            <ModalQuestion deleteAction={true} performAction={handleDelete} openModal={openDelete} setOpenModal={setOpenDelete} loader={loader} />
+            <ModalQuestion performAction={handleUpdate} openModal={openUpdate} setOpenModal={setOpenUpdate} loader={loader} />
           </Card.Content>
         }
       </Card>

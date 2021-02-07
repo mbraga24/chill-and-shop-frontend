@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Container, Grid, Button, Divider, Form, Icon } from 'semantic-ui-react';
 import { ADD_PRODUCT, DELETE_FORM, SET_BANNER, SET_FORM } from '../../store/type';
 import CardProduct from '../cardProduct/CardProduct';
-import ProductForm from '../productForm/ProductForm';
+import ProductCreateForm from '../productCreateForm/ProductCreateForm';
 import { superId } from '../../helpers';
 import { newProduct } from '../../api';
 import './Styles.scss';
@@ -48,7 +48,7 @@ const Inventory = ({ handleBanner }) => {
       formData.append("fileName", fileName)
       formData.append("title", "")
 
-      return <ProductForm 
+      return <ProductCreateForm 
         key={formId} 
         removeForm={removeForm}
         formId={formId}

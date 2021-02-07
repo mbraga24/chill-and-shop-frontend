@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Grid, Menu, Segment } from 'semantic-ui-react'
-import Profile from '../profile/Profile';
+import YourProfile from '../yourProfile/YourProfile';
 import YourOrders from '../yourOrders/YourOrders';
 import YourSales from '../yourSales/YourSales';
 import YourBusiness from '../yourBusiness/YourBusiness';
@@ -15,7 +15,7 @@ const Dashboard = () => {
   const displayTabComponent = () => {
     switch(activeItem) {
       case "profile":
-        return <Profile/>
+        return <YourProfile/>
       case "sales":
         return <YourSales />
       case "business":
@@ -23,7 +23,7 @@ const Dashboard = () => {
       case "orders":
         return <YourOrders/>
       default:
-        return <Profile/>
+        return <YourProfile/>
     }
   }
 
