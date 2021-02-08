@@ -6,7 +6,6 @@ import { queryProducts } from '../../api';
 import { deleteProduct, createOrder } from '../../api';
 import { REMOVE_PRODUCT, SET_BANNER, ADD_ORDER, UPDATE_TOTAL_ORDER } from '../../store/type';
 
-
 import './Styles.scss';
 
 const Product = ({ handleBanner }) => {
@@ -109,7 +108,7 @@ const Product = ({ handleBanner }) => {
             />
         </Form>
         <div className="products__gridGallery">
-            {renderProducts()}
+          {renderProducts()}
         </div>
       </Container>
   )

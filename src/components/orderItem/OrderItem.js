@@ -42,13 +42,9 @@ const OrderItem = ({ orderProduct, soldOut = false, quantityOptions = 0, current
   }
   
     return (
-      <Grid.Column className="orderItem" id="cardContainer">
-        <Card className="orderItem__card">
-          <div  role="img" 
-                aria-label={product.title}
-                title={product.title}
-                className="orderItem__image" 
-                style={{backgroundImage: `url(${product.image_url})` }} />
+      <Grid.Column className="orderItem">
+        <Card>
+          <img src={`${product.image_url}`} alt={product.title} className="orderItem__image" />
           <Card.Content>
             <Card.Header>{product.title}</Card.Header>
             <Card.Description>

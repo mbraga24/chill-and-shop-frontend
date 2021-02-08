@@ -1,7 +1,9 @@
 @import '../../styles/utils/breakpoints.scss';
 
 .cardItem {
-  width: 100%;
+  height: 100%;
+  justify-self: center;
+  align-self: center;
 
   // @media only screen and (max-width: $mobile) {
   //   padding: 0;
@@ -13,5 +15,6 @@
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    object-fit: cover;
   }
 }

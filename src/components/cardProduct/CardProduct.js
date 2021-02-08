@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Icon, Button, Dropdown } from 'semantic-ui-react';
+import { Card, Icon, Button, Dropdown, Divider } from 'semantic-ui-react';
 import ModalQuestion from '../modalQuestion/ModalQuestion';
 
 import './Styles.scss';
@@ -35,11 +35,7 @@ const CardProduct = ({ thisProduct, currentUser, loader, removeProduct, updatePr
 
     return (
       <Card className="cardItem">
-        <div role="img" 
-              aria-label={thisProduct.title}
-              title={thisProduct.title}
-              className="cardItem__image" 
-              style={{backgroundImage: `url(${thisProduct.image_url})` }} />
+        <img src={`${thisProduct.image_url}`} alt={thisProduct.title} className="cardItem__image" />
         <Card.Content>
           <Card.Header>{thisProduct.title}</Card.Header>
           <Card.Description>
@@ -50,37 +46,35 @@ const CardProduct = ({ thisProduct, currentUser, loader, removeProduct, updatePr
           </Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <div floated='left'>
-            <Icon name='user' />
-            {seller.first_name} {seller.last_name}
-          </div>
-          <div>
-          { 
-            notShopper && 
-            <>
-              <Dropdown 
-                name="quantity"
-                disabled={isAvailable}
-                compact
-                selection 
-                placeholder='Qty' 
-                options={quantityOptions} 
-                onChange={chooseQuantity}
-              />
-              <Button floated='right' color="blue" disabled={isAvailable} icon onClick={handleAddToCart}>
-                {cartButtonOptions}
-              </Button>
-            </>
-          }
-          </div>
-        </Card.Content>
-        {
-          currentUser && !notShopper && 
-          <Card.Content textAlign='center' extra>
-            <ModalQuestion deleteAction={true} performAction={handleDelete} openModal={openDelete} setOpenModal={setOpenDelete} loader={loader} />
-            <ModalQuestion performAction={handleUpdate} openModal={openUpdate} setOpenModal={setOpenUpdate} loader={loader} />
+          <Icon name='user' />
+          {seller.first_name} {seller.last_name}
+        </Card.Content>  
+        { 
+          notShopper && 
+          <Card.Content extra>
+            <div>
+                <Dropdown 
+                  name="quantity"
+                  disabled={isAvailable}
+                  compact
+                  selection 
+                  placeholder='Qty' 
+                  options={quantityOptions} 
+                  onChange={chooseQuantity}
+                />
+                <Button floated='right' color="blue" disabled={isAvailable} icon onClick={handleAddToCart}>
+                  {cartButtonOptions}
+                </Button>
+            </div>
           </Card.Content>
-        }
+          }
+          {
+            currentUser && !notShopper && 
+            <Card.Content textAlign='center' extra>
+              <ModalQuestion deleteAction={true} performAction={handleDelete} openModal={openDelete} setOpenModal={setOpenDelete} loader={loader} />
+              <ModalQuestion performAction={handleUpdate} openModal={openUpdate} setOpenModal={setOpenUpdate} loader={loader} />
+            </Card.Content>
+          }
       </Card>
   )
 }
