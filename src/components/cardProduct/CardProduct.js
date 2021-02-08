@@ -4,7 +4,7 @@ import ModalQuestion from '../modalQuestion/ModalQuestion';
 
 import './Styles.scss';
 
-const CardProduct = ({ thisProduct, currentUser, loader, removeProduct, updateProduct, selected = false, soldOut = false, quantityOptions = 0, addToShoppingCart }) => {
+const CardProduct = ({ thisProduct, currentUser, loader, removeFunction, placeOrder = false, updateFunction, selected = false, soldOut = false, quantityOptions = 0, addToShoppingCart }) => {
 
   let isAvailable = soldOut || selected ? true : false;
   let cartButtonOptions = soldOut ? "Sold out" : selected ? "Added to cart" : <Icon name='shopping cart' />;
@@ -19,12 +19,13 @@ const CardProduct = ({ thisProduct, currentUser, loader, removeProduct, updatePr
 
   const handleDelete = () => {
     openDelete && setOpenDelete(false);
-    removeProduct(thisProduct.id);
+    removeFunction(thisProduct.id);
   }
 
-  const handleUpdate = () => {
-    console.log("handling update......")
-    updateProduct();
+  const handleUpdate = (e, {value}) => {
+    // console.log("handling update......")
+    const productId = thisProduct.id
+    updateFunction(value, productId);
   }
 
   useEffect(() => {
@@ -53,26 +54,32 @@ const CardProduct = ({ thisProduct, currentUser, loader, removeProduct, updatePr
           notShopper && 
           <Card.Content extra>
             <div>
-                <Dropdown 
-                  name="quantity"
-                  disabled={isAvailable}
-                  compact
-                  selection 
-                  placeholder='Qty' 
-                  options={quantityOptions} 
-                  onChange={chooseQuantity}
-                />
-                <Button floated='right' color="blue" disabled={isAvailable} icon onClick={handleAddToCart}>
-                  {cartButtonOptions}
-                </Button>
+              <Dropdown 
+                name="quantity"
+                disabled={isAvailable}
+                compact
+                selection 
+                placeholder='Qty' 
+                options={quantityOptions} 
+                onChange={chooseQuantity}
+              />
+              <Button floated='right' color="blue" disabled={isAvailable} icon onClick={handleAddToCart}>
+                {cartButtonOptions}
+              </Button>
             </div>
           </Card.Content>
           }
           {
             currentUser && !notShopper && 
             <Card.Content textAlign='center' extra>
-              <ModalQuestion deleteAction={true} performAction={handleDelete} openModal={openDelete} setOpenModal={setOpenDelete} loader={loader} />
-              <ModalQuestion performAction={handleUpdate} openModal={openUpdate} setOpenModal={setOpenUpdate} loader={loader} />
+              {
+              true ?
+              <>
+                <ModalQuestion deleteAction={true} performAction={handleDelete} openModal={openDelete} setOpenModal={setOpenDelete} loader={loader} />
+                <ModalQuestion performAction={handleUpdate} openModal={openUpdate} setOpenModal={setOpenUpdate} loader={loader} />
+              </> :
+                <ModalQuestion deleteAction={true} cartAction={true} performAction={handleDelete} openModal={openDelete} setOpenModal={setOpenDelete} loader={loader}/>
+              }
             </Card.Content>
           }
       </Card>

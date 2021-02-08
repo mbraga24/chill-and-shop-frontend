@@ -86,8 +86,8 @@ const Product = ({ handleBanner }) => {
         thisProduct={product} 
         currentUser={currentUser}
         loader={loader}
-        removeProduct={removeProduct}
-        updateProduct={updateProduct}
+        removeFunction={removeProduct}
+        updateFunction={updateProduct}
 
         selected={isInShoppingCart(product)}
         soldOut={isSoldOut(product)}

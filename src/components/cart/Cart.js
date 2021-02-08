@@ -2,9 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Grid, Divider, Button } from 'semantic-ui-react';
-import { SET_BANNER, SET_ORDERS, UPDATE_TOTAL_ORDER } from '../../store/type';
 import OrderItem from '../orderItem/OrderItem';
-import { placeOrder } from '../../api';
+import { placeOrder, deleteOrderItem, updateOrderItem } from '../../api';
+import { REMOVE_ORDER, SET_ORDERS, UPDATE_TOTAL_ORDER, SET_BANNER, UPDATE_ORDER } from '../../store/type';
 
 import './Styles.scss';
 
@@ -15,6 +15,7 @@ const Cart = ({ history, handleBanner }) => {
   const totalOrder = useSelector(state => state.order.totalOrder);
   const currentUser = useSelector(state => state.app.currentUser);
 
+  const [ loader, setLoader ] = useState(false);
   const [ emptyCart, setEmptyCart ] = useState(false)
   const dispatch = useDispatch()
   
@@ -51,15 +52,57 @@ const Cart = ({ history, handleBanner }) => {
     })
   }
 
+  const removeFromCart = (productId) => {
+    console.log("REMOVE FROM CART", productId)
+    // setLoader(true)
+    // deleteOrderItem(productId)
+    // .then(data => {
+    //   const { orderItem, orderTotal, confirmation } = data;
+    //   setTimeout(() => {
+    //     handleBanner();
+    //     dispatch({ type: REMOVE_ORDER, payload: orderItem.id });
+    //     dispatch({ type: UPDATE_TOTAL_ORDER, payload: orderTotal });
+    //     dispatch({ type: SET_BANNER, payload: confirmation });
+    //     setOpenDelete(false);
+    //     setLoader(false);
+    //   }, [1500])
+    // })
+  }
+
+  const updateCart = (value, productId) => {
+    
+    console.log("UPDATE CART")
+    console.log("value", value)
+    console.log("productId", productId)
+    // updateOrderItem(orderProduct.id, value)
+    // .then(data => {
+    //   const { orderItem, orderTotal, confirmation } = data;
+    //   handleBanner();
+    //   dispatch({ type: UPDATE_TOTAL_ORDER, payload: orderTotal });
+    //   dispatch({ type: UPDATE_ORDER, payload: orderItem });
+    //   dispatch({ type: SET_BANNER, payload: confirmation });
+    // })
+  };
+
   const displayOrders = () => {
-    return orders.map(orderProduct => (
-      <Grid.Column key={`${orderProduct.id}`}>
-        <OrderItem 
-          orderProduct={orderProduct} 
-          soldOut={isSoldOut(orderProduct)}
-          quantityOptions={checkProductQuantity(orderProduct.product.quantity)}
+    return orders.map(product => (
+      <Grid.Column key={`${product.id}`}>
+        {/* <OrderItem 
+          product={product} 
+          soldOut={isSoldOut(product)}
+          quantityOptions={checkProductQuantity(product.product.quantity)}
           currentUser={currentUser} 
-          handleBanner={handleBanner}/>
+          handleBanner={handleBanner}/> */}
+
+        <CardProduct 
+          key={`${product.title}-${product.id}`} 
+          thisProduct={product} 
+          currentUser={currentUser}
+          loader={loader}
+          removeFunction={removeFromCart}
+          updateFunction={updateCart}
+          placeOrder={true}
+          />
       </Grid.Column>
     ))
   }
