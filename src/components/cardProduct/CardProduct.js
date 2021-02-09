@@ -1,29 +1,41 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Icon, Button, Dropdown, Divider } from 'semantic-ui-react';
+import { Card, Icon, Button, Divider, Dropdown } from 'semantic-ui-react';
 import ModalQuestion from '../modalQuestion/ModalQuestion';
 
 import './Styles.scss';
 
-const CardProduct = ({ thisProduct, currentUser, loader, removeFunction, placeOrder = false, updateFunction, selected = false, soldOut = false, quantityOptions = 0, addToShoppingCart }) => {
+const CardProduct = ({ productData, currentUser, removeFunction, updateFunction, loader, quantityOptions = 0, inShoppingCart = false, selected = false, soldOut = false, addToShoppingCart }) => {
 
   let isAvailable = soldOut || selected ? true : false;
-  let cartButtonOptions = soldOut ? "Sold out" : selected ? "Added to cart" : <Icon name='shopping cart' />;
+  let buttonOptions = soldOut ? "Sold out" : selected ? "Added to cart" : <Icon name='shopping cart' />;
   const [ openDelete, setOpenDelete ] = useState(false);
   const [ openUpdate, setOpenUpdate ] = useState(false);
   const [ notShopper, setNotShopper ] = useState(false);
   const [ quantity, setQuantity ] = useState(1);
-  const { seller } = thisProduct;
+  let seller;
+  let orderItem;
+  let thisProduct;
 
+  if (inShoppingCart) {
+    orderItem = productData.orderItem
+    thisProduct = productData.product
+    seller = thisProduct.seller
+  } else {
+    seller = productData.seller;
+    thisProduct = productData
+  }
 
-  const handleAddToCart = () => addToShoppingCart(thisProduct.id, quantity)
+  console.log("orderItem =>>", orderItem)
+
+  const handleAddToCart = () => addToShoppingCart(productData.id, quantity)
 
   const handleDelete = () => {
     openDelete && setOpenDelete(false);
-    removeFunction(thisProduct.id);
+    const sendId = inShoppingCart ? orderItem.id : thisProduct.id;
+    removeFunction(sendId);
   }
 
   const handleUpdate = (e, {value}) => {
-    // console.log("handling update......")
     const productId = thisProduct.id
     updateFunction(value, productId);
   }
@@ -32,7 +44,7 @@ const CardProduct = ({ thisProduct, currentUser, loader, removeFunction, placeOr
     setNotShopper(seller.email !== currentUser.email);
   }, [notShopper, currentUser, seller])
 
-  const chooseQuantity = (e, {value}) => {setQuantity(value)};
+  const chooseQuantity = (e, {value}) => { setQuantity(value) };
 
     return (
       <Card className="cardItem">
@@ -40,11 +52,20 @@ const CardProduct = ({ thisProduct, currentUser, loader, removeFunction, placeOr
         <Card.Content>
           <Card.Header>{thisProduct.title}</Card.Header>
           <Card.Description>
-            Price: ${thisProduct.price}
+            Price: ${inShoppingCart ? orderItem.unit_price : thisProduct.price}
           </Card.Description>
           <Card.Description>
             Qty: {thisProduct.quantity}
           </Card.Description>
+          {
+          inShoppingCart &&
+          <>
+            <Divider/>
+            <Card.Description>
+              Total for this order: ${orderItem.total_price}
+            </Card.Description>
+          </>
+          }
         </Card.Content>
         <Card.Content extra>
           <Icon name='user' />
@@ -59,26 +80,28 @@ const CardProduct = ({ thisProduct, currentUser, loader, removeFunction, placeOr
                 disabled={isAvailable}
                 compact
                 selection 
-                placeholder='Qty' 
+                placeholder={inShoppingCart ? "Update qty" : "Qty"}
                 options={quantityOptions} 
-                onChange={chooseQuantity}
+                onChange={inShoppingCart ? updateFunction : chooseQuantity}
               />
+              {
+              !inShoppingCart ?
               <Button floated='right' color="blue" disabled={isAvailable} icon onClick={handleAddToCart}>
-                {cartButtonOptions}
-              </Button>
+                {buttonOptions}
+              </Button> :
+              <ModalQuestion deleteAction={true} cartAction={true} performAction={handleDelete} openModal={openDelete} setOpenModal={setOpenDelete} loader={loader}/>
+              }
             </div>
           </Card.Content>
           }
           {
-            currentUser && !notShopper && 
             <Card.Content textAlign='center' extra>
               {
-              true ?
+              currentUser && !notShopper &&
               <>
                 <ModalQuestion deleteAction={true} performAction={handleDelete} openModal={openDelete} setOpenModal={setOpenDelete} loader={loader} />
                 <ModalQuestion performAction={handleUpdate} openModal={openUpdate} setOpenModal={setOpenUpdate} loader={loader} />
-              </> :
-                <ModalQuestion deleteAction={true} cartAction={true} performAction={handleDelete} openModal={openDelete} setOpenModal={setOpenDelete} loader={loader}/>
+              </> 
               }
             </Card.Content>
           }
