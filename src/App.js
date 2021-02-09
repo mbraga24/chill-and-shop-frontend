@@ -49,6 +49,7 @@ const App = () => {
   useEffect(() => {
     currentUser && getOrders()
     .then(data => {
+      console.log("GET ORDERS", data.orders)
       const { orders, totalOrder } = data
       dispatch({ type: SET_ORDERS, payload: orders })
       dispatch({ type: UPDATE_TOTAL_ORDER, payload: totalOrder })
