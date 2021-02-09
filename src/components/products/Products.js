@@ -75,23 +75,23 @@ const Product = ({ handleBanner }) => {
     })
   }
 
-  const updateProduct = () => {
-    console.log("UPDATE PRODUCT FROM PRODUCT COMPONENT!!!")
+  const updateProduct = (value, productId) => {
+    console.log("UPDATE PRODUCT FROM PRODUCTS COMP!!!", value, productId)
   }
 
   const renderProducts = () => {
     return searchProducts.map(product => (
       <CardProduct 
         key={`${product.title}-${product.id}`} 
-        thisProduct={product} 
+        productData={product} 
         currentUser={currentUser}
-        loader={loader}
         removeFunction={removeProduct}
         updateFunction={updateProduct}
-
+        loader={loader}
+        quantityOptions={checkProductQuantity(product.quantity)}
+        
         selected={isInShoppingCart(product)}
         soldOut={isSoldOut(product)}
-        quantityOptions={checkProductQuantity(product.quantity)}
         addToShoppingCart={addToShoppingCart}
         />
     ))
