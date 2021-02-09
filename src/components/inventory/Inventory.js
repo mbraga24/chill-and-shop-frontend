@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Grid, Button, Divider, Form, Icon } from 'semantic-ui-react';
-import { ADD_PRODUCT, DELETE_FORM, SET_BANNER, SET_FORM } from '../../store/type';
+import { Container, Button, Divider, Form, Icon } from 'semantic-ui-react';
 import CardProduct from '../cardProduct/CardProduct';
 import ProductCreateForm from '../productCreateForm/ProductCreateForm';
 import { superId } from '../../helpers';
-import { newProduct } from '../../api';
+import { newProduct, deleteProduct } from '../../api';
+import { ADD_PRODUCT, REMOVE_PRODUCT, DELETE_FORM, SET_BANNER, SET_FORM } from '../../store/type';
 import './Styles.scss';
 
 const Inventory = ({ handleBanner }) => {
@@ -15,6 +15,7 @@ const Inventory = ({ handleBanner }) => {
   const newProducts = useSelector(state => state.product.newProducts);
   const [ imageLoader, setImageLoader ] = useState(false);
   const [ createReady, setCreateReady ] = useState(true);
+  const [ loader, setLoader ] = useState(false);
   const [ componentForms, setComponentForms ] = useState({});
   const [ sellerProducts, setSellerProducts] = useState([]);
   const dispatch = useDispatch();
@@ -31,31 +32,51 @@ const Inventory = ({ handleBanner }) => {
     }
   };
 
-    const removeForm = (formId, fileName) => {
-      let updatedForms = { ...componentForms };
-      delete updatedForms[formId];
-      setComponentForms(updatedForms);
-      dispatch({ type: DELETE_FORM, payload: fileName });
-    }
+  const removeForm = (formId, fileName) => {
+    let updatedForms = { ...componentForms };
+    delete updatedForms[formId];
+    setComponentForms(updatedForms);
+    dispatch({ type: DELETE_FORM, payload: fileName });
+  }
 
-    const renderForms = () => Object.keys(componentForms).map((key) => {
-      const formId = componentForms[key].id;
-      const file = componentForms[key].file;
-      const fileName = componentForms[key].file.name;
+  const removeProduct = (productId) => {
+    setLoader(true)
+    deleteProduct(productId, localStorage.token)
+    .then(data => {
+      if (data.error) {
+        console.log("error", data.error)
+      } else {
+        const { product, confirmation } = data;
+        handleBanner()
+        dispatch({ type: REMOVE_PRODUCT, payload: product });
+        dispatch({ type: SET_BANNER, payload: confirmation });
+        setLoader(false)
+      }
+    })
+  }
+  
+  const updateProduct = (value, productId) => {
+    console.log("UPDATE PRODUCT FROM INVENTORY COMP!!!", value, productId)
+  }
 
-      const formData = new FormData();
-      formData.append("file", file);
-      formData.append("fileName", fileName)
-      formData.append("title", "")
+  const renderForms = () => Object.keys(componentForms).map((key) => {
+    const formId = componentForms[key].id;
+    const file = componentForms[key].file;
+    const fileName = componentForms[key].file.name;
 
-      return <ProductCreateForm 
-        key={formId} 
-        removeForm={removeForm}
-        formId={formId}
-        file={file}
-        formData={formData} />
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("fileName", fileName)
+    formData.append("title", "")
 
-    });
+    return <ProductCreateForm 
+      key={formId} 
+      removeForm={removeForm}
+      formId={formId}
+      file={file}
+      formData={formData} />
+
+  });
 
   useEffect(() => {
     setSellerProducts(findSellerProducts());
@@ -66,9 +87,11 @@ const Inventory = ({ handleBanner }) => {
     return sellerProducts.map(thisProduct => (
       <CardProduct 
         key={`${thisProduct.title}-${thisProduct.id}`} 
-        thisProduct={thisProduct} 
+        productData={thisProduct} 
         currentUser={currentUser} 
-        handleBanner={handleBanner}
+        removeFunction={removeProduct}
+        updateFunction={updateProduct}
+        loader={loader}
       />
     ))
   }
