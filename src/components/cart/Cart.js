@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { Container, Grid, Divider, Button } from 'semantic-ui-react';
-import OrderItem from '../orderItem/OrderItem';
+import CardProduct from '../cardProduct/CardProduct';
 import { placeOrder, deleteOrderItem, updateOrderItem } from '../../api';
+// import { placeOrder } from '../../api';
 import { REMOVE_ORDER, SET_ORDERS, UPDATE_TOTAL_ORDER, SET_BANNER, UPDATE_ORDER } from '../../store/type';
+// import { SET_ORDERS, UPDATE_TOTAL_ORDER, SET_BANNER } from '../../store/type';
 
 import './Styles.scss';
 
@@ -23,9 +25,9 @@ const Cart = ({ history, handleBanner }) => {
     setEmptyCart(orders.length === 0)
   }, [emptyCart, orders.length])
 
-  const isSoldOut = product => {
-    return product.quantity === 0
-  }
+  // const isSoldOut = product => {
+  //   return product.quantity === 0
+  // }
 
   const checkProductQuantity = quantity => {
     let options = [];
@@ -54,19 +56,18 @@ const Cart = ({ history, handleBanner }) => {
 
   const removeFromCart = (productId) => {
     console.log("REMOVE FROM CART", productId)
-    // setLoader(true)
-    // deleteOrderItem(productId)
-    // .then(data => {
-    //   const { orderItem, orderTotal, confirmation } = data;
-    //   setTimeout(() => {
-    //     handleBanner();
-    //     dispatch({ type: REMOVE_ORDER, payload: orderItem.id });
-    //     dispatch({ type: UPDATE_TOTAL_ORDER, payload: orderTotal });
-    //     dispatch({ type: SET_BANNER, payload: confirmation });
-    //     setOpenDelete(false);
-    //     setLoader(false);
-    //   }, [1500])
-    // })
+    setLoader(true)
+    deleteOrderItem(productId)
+    .then(data => {
+      const { orderItem, orderTotal, confirmation } = data;
+      setTimeout(() => {
+        handleBanner();
+        dispatch({ type: REMOVE_ORDER, payload: orderItem.id });
+        dispatch({ type: UPDATE_TOTAL_ORDER, payload: orderTotal });
+        dispatch({ type: SET_BANNER, payload: confirmation });
+        setLoader(false);
+      }, [1500])
+    })
   }
 
   const updateCart = (value, productId) => {
@@ -85,27 +86,33 @@ const Cart = ({ history, handleBanner }) => {
   };
 
   const displayOrders = () => {
-    return orders.map(product => (
-      <Grid.Column key={`${product.id}`}>
-        {/* <OrderItem 
-          product={product} 
-          soldOut={isSoldOut(product)}
-          quantityOptions={checkProductQuantity(product.product.quantity)}
-          currentUser={currentUser} 
-          handleBanner={handleBanner}/> */}
-
+    return orders.map(orderItem => (
+      <Grid.Column key={`${orderItem.id}`}>
         <CardProduct 
-          key={`${product.title}-${product.id}`} 
-          thisProduct={product} 
+          key={`${orderItem.title}-${orderItem.id}`} 
+          productData={ { product: orderItem.product, orderItem } } 
           currentUser={currentUser}
-          loader={loader}
           removeFunction={removeFromCart}
           updateFunction={updateCart}
-          placeOrder={true}
+          loader={loader}
+          quantityOptions={checkProductQuantity(orderItem.product.quantity)}
+          inShoppingCart={true}
           />
       </Grid.Column>
     ))
   }
+
+  // thisProduct, 
+  // currentUser, 
+  // loader, 
+  // removeFunction, 
+  // updateFunction, 
+  // quantityOptions = 0, 
+
+  // placeOrder = false, 
+  // selected = false, 
+  // soldOut = false, 
+  // addToShoppingCart
 
   if (emptyCart) {
     cartBody = <h2 className="cart__text">Your cart is empty</h2>
