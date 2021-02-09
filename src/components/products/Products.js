@@ -89,9 +89,8 @@ const Product = ({ handleBanner }) => {
         updateFunction={updateProduct}
         loader={loader}
         quantityOptions={checkProductQuantity(product.quantity)}
-        
-        selected={isInShoppingCart(product)}
         soldOut={isSoldOut(product)}
+        selected={isInShoppingCart(product)}
         addToShoppingCart={addToShoppingCart}
         />
     ))

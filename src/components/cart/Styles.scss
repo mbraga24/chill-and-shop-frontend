@@ -1,6 +1,6 @@
 .cart {
-  display: inline-block;
-  height: 100vh; 
+  // display: inline-block;
+  // height: 100vh; 
 
   &__title {
     text-align: center;
@@ -12,13 +12,18 @@
     align-items: center;
   }
 
-  &__grid {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
   &__text {
     padding: 100px 0;
+  }
+
+  &__gridGallery {
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-column-gap: 20px;
+    justify-items: center;
   }
 }

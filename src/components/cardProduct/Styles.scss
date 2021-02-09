@@ -1,6 +1,6 @@
 @import '../../styles/utils/breakpoints.scss';
 
-.cardItem {
+.cardProduct {
   height: 100%;
   justify-self: center;
   align-self: center;
@@ -16,5 +16,15 @@
     background-position: center;
     background-repeat: no-repeat;
     object-fit: cover;
+  }
+
+  &__extraContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__quantity {
+    width: 125px;
   }
 }

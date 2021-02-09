@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { withRouter } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { Container, Grid, Divider, Button } from 'semantic-ui-react';
+import { Container, Divider, Button } from 'semantic-ui-react';
 import CardProduct from '../cardProduct/CardProduct';
 import { placeOrder, deleteOrderItem, updateOrderItem } from '../../api';
-// import { placeOrder } from '../../api';
 import { REMOVE_ORDER, SET_ORDERS, UPDATE_TOTAL_ORDER, SET_BANNER, UPDATE_ORDER } from '../../store/type';
-// import { SET_ORDERS, UPDATE_TOTAL_ORDER, SET_BANNER } from '../../store/type';
 
 import './Styles.scss';
 
@@ -25,9 +23,9 @@ const Cart = ({ history, handleBanner }) => {
     setEmptyCart(orders.length === 0)
   }, [emptyCart, orders.length])
 
-  // const isSoldOut = product => {
-  //   return product.quantity === 0
-  // }
+  const isSoldOut = product => {
+    return product.quantity === 0
+  }
 
   const checkProductQuantity = quantity => {
     let options = [];
@@ -70,49 +68,32 @@ const Cart = ({ history, handleBanner }) => {
     })
   }
 
-  const updateCart = (value, productId) => {
-    
-    console.log("UPDATE CART")
-    console.log("value", value)
-    console.log("productId", productId)
-    // updateOrderItem(orderProduct.id, value)
-    // .then(data => {
-    //   const { orderItem, orderTotal, confirmation } = data;
-    //   handleBanner();
-    //   dispatch({ type: UPDATE_TOTAL_ORDER, payload: orderTotal });
-    //   dispatch({ type: UPDATE_ORDER, payload: orderItem });
-    //   dispatch({ type: SET_BANNER, payload: confirmation });
-    // })
+  const updateCart = (value, orderItemId) => {
+    updateOrderItem(orderItemId, value)
+    .then(data => {
+      const { orderItem, orderTotal, confirmation } = data;
+      handleBanner();
+      dispatch({ type: UPDATE_TOTAL_ORDER, payload: orderTotal });
+      dispatch({ type: UPDATE_ORDER, payload: orderItem });
+      dispatch({ type: SET_BANNER, payload: confirmation });
+    })
   };
 
   const displayOrders = () => {
     return orders.map(orderItem => (
-      <Grid.Column key={`${orderItem.id}`}>
-        <CardProduct 
-          key={`${orderItem.title}-${orderItem.id}`} 
-          productData={ { product: orderItem.product, orderItem } } 
-          currentUser={currentUser}
-          removeFunction={removeFromCart}
-          updateFunction={updateCart}
-          loader={loader}
-          quantityOptions={checkProductQuantity(orderItem.product.quantity)}
-          inShoppingCart={true}
-          />
-      </Grid.Column>
+      <CardProduct 
+        key={`${orderItem.title}-${orderItem.id}`} 
+        productData={ { product: orderItem.product, orderItem } } 
+        currentUser={currentUser}
+        removeFunction={removeFromCart}
+        updateFunction={updateCart}
+        loader={loader}
+        quantityOptions={checkProductQuantity(orderItem.product.quantity)}
+        soldOut={isSoldOut(orderItem.product)}
+        inShoppingCart={true}
+        />
     ))
   }
-
-  // thisProduct, 
-  // currentUser, 
-  // loader, 
-  // removeFunction, 
-  // updateFunction, 
-  // quantityOptions = 0, 
-
-  // placeOrder = false, 
-  // selected = false, 
-  // soldOut = false, 
-  // addToShoppingCart
 
   if (emptyCart) {
     cartBody = <h2 className="cart__text">Your cart is empty</h2>
@@ -124,11 +105,9 @@ const Cart = ({ history, handleBanner }) => {
       <Container className="cart">
         <h1 className="cart__title">Cart</h1>
         <Divider/>
-        <Grid className="cart__grid">
-          <Grid.Row columns={4}>
-            {cartBody}
-          </Grid.Row>
-        </Grid>
+        <div className="cart__gridGallery">
+          {cartBody}
+        </div>
         <Divider/>
         <div className="cart__orderOverview">
           <h2>Total: {totalOrder}</h2>
