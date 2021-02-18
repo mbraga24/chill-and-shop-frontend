@@ -38,7 +38,7 @@ This project was inspired on an application assessment for a backend internship 
 
 ## Installation
 
-#### [Chill&Shop - Frontend](https://github.com/mrdbrg/chill-and-shop-frontend)
+#### [Chill & Shop - Frontend](https://github.com/mrdbrg/chill-and-shop-frontend)
 
 1. Fork this pository.
 1. Clone this repository onto your local machine.
