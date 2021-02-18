@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+# Chill And Shop
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Preview 
 
-## Available Scripts
+#### =====> SCREENSHOTS GO HERE <=====
 
-In the project directory, you can run:
+<br />
 
-### `yarn start`
+### Checkout the project [demo here](needs-to-work-ondemo)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+<br />
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+---
 
-### `yarn test`
+### Table of Contents
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [Description](#description)
+- [Installation](#installation)
+- [References And Technologies](#references-and-technologies)
+- [License](#license)
+- [Author Info](#author-info)
 
-### `yarn build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Description
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Users can create two different accounts. They can create a store (sellers) or just **Chill & Shop** (buyers). Store owners and buyers will have a dashboard to keep track of their purchases (buyers), products to be delivered(sellers), an archived of delivered products(sellers), and an overall stats of their earnings, expenses, and profits (sellers) delivered by graphics and chars (this is a stretch feature currently unavailable).
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+I'm excited to keep working on this project and expand its features and capabilities.
 
-### `yarn eject`
+#### Inspiration
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+This project was inspired on an application assessment for a backend internship role for [Shopify](shorturl.at/iCTY8). Unfortunately I could't complete all the requirements before submission but I decided to keep working on it to learn more about how to develop those specific features and challenge myself to finish, if not all, at least most of the requirements for the that assessment.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+[Back To The Top](#chill-and-shop)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+---
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Installation
 
-## Learn More
+#### [Chill&Shop - Frontend](https://github.com/mrdbrg/chill-and-shop-frontend)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+1. Fork this pository.
+1. Clone this repository onto your local machine.
+1. From your terminal `cd` into the project's folder.
+1. Run `npm install` to install all packages and dependencies.
+1. Follow the instructions for the [back-end portion](https://github.com/mrdbrg/chill-and-shop-backend) of this application.
+1. Run `npm start` to run the application.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+[Back To The Top](#chill-and-shop)
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## References and Technologies
 
-### Analyzing the Bundle Size
+#### Technologies
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- HTML
+- CSS
+- Javascript
+- [React](https://reactjs.org/)
 
-### Making a Progressive Web App
+#### Libraries
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+- [Semantic UI React](https://react.semantic-ui.com/)
 
-### Advanced Configuration
+[Back To The Top](#chill-and-shop)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## License
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+MIT License
 
-### `yarn build` fails to minify
+Copyright [2020] [Marlon Braga]
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+[Back To The Top](#chill-and-shop)
+
+---
+
+## Author Info
+
+- LinkedIn - [Marlon Braga](https://www.linkedin.com/in/marlon-braga/)
+- Portfolio - [Currently unavailable and under construction](https://www.youtube.com/watch?v=oHg5SJYRHA0&ab_channel=cotter548)
+
+[Back To The Top](#chill-and-shop)
