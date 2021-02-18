@@ -19,7 +19,7 @@
 
 <br />
 
-### Checkout the project [demo here](needs-to-work-ondemo)
+### Check out more features of this project here: [Demo walkthrough](link)
 
 <br />
 
