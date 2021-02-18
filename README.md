@@ -1,5 +1,18 @@
 # Chill And Shop
 
+---
+
+### Table of Contents
+
+- [Project Preview](#project-preview)
+- [Description](#description)
+- [Installation](#installation)
+- [References And Technologies](#references-and-technologies)
+- [License](#license)
+- [Author Info](#author-info)
+
+---
+
 ## Project Preview 
 
 #### =====> SCREENSHOTS GO HERE <=====
@@ -9,16 +22,6 @@
 ### Checkout the project [demo here](needs-to-work-ondemo)
 
 <br />
-
----
-
-### Table of Contents
-
-- [Description](#description)
-- [Installation](#installation)
-- [References And Technologies](#references-and-technologies)
-- [License](#license)
-- [Author Info](#author-info)
 
 ---
 
