@@ -15,7 +15,41 @@
 
 ## Project Preview 
 
-#### =====> SCREENSHOTS GO HERE <=====
+Home
+![Preview-1](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700085/ChillAndShop%20-%20Project%20Preview/Home_page_tqtu10.png)
+
+Sign up page - Create store
+![Preview-2](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700086/ChillAndShop%20-%20Project%20Preview/Create_Store_e60raf.png)
+
+Login - Enter store
+![Preview-3](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700184/ChillAndShop%20-%20Project%20Preview/Login_cdh7ui.png)
+
+Dashboard - Sidebar options  
+![Preview-4](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700084/ChillAndShop%20-%20Project%20Preview/Dashboard_z2ye1h.png)
+
+All products view
+![Preview-5](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700085/ChillAndShop%20-%20Project%20Preview/View_all_products_gaqdr7.png)
+
+Search for a product
+![Preview-6](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700085/ChillAndShop%20-%20Project%20Preview/Search_for_Products_zu6umh.png)
+
+Choose product quantity / Product added to the shopping cart
+![Preview-7](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700086/ChillAndShop%20-%20Project%20Preview/Add_product_and_product_added_to_shopping_cart_crudko.jpg)
+
+Shopping Cart view - Product details: price, quantity, subtotal, total of all products
+![Preview-8](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700085/ChillAndShop%20-%20Project%20Preview/Shopping_Cart_view_y5tm1a.png)
+
+Shopping Cart product update - Updated product details: price, quantity, subtotal, total of all products
+![Preview-9](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700085/ChillAndShop%20-%20Project%20Preview/Update_Shopping_Cart_llqajn.png)
+
+Inventory view
+![Preview-10](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700086/ChillAndShop%20-%20Project%20Preview/View_inventory_ochbp7.png)
+
+Create multiple forms to add multiple products to inventory
+![Preview-11](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700085/ChillAndShop%20-%20Project%20Preview/Create_new_products_fwi6ip.png)
+
+Products added to inventory - Cloudinary will store all product images
+![Preview-12](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700085/ChillAndShop%20-%20Project%20Preview/Products_added_to_inventory_gx7uiu.png)
 
 <br />
 
