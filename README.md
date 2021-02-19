@@ -1,70 +1,131 @@
-# Getting Started with Create React App
+# Chill And Shop
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+---
 
-## Available Scripts
+### Table of Contents
 
-In the project directory, you can run:
+- [Project Preview](#project-preview)
+- [Description](#description)
+- [Installation](#installation)
+- [References And Technologies](#references-and-technologies)
+- [License](#license)
+- [Author Info](#author-info)
 
-### `yarn start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Project Preview 
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Home
+![Preview-1](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700085/ChillAndShop%20-%20Project%20Preview/Home_page_tqtu10.png)
 
-### `yarn test`
+Sign up page - Create store
+![Preview-2](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700086/ChillAndShop%20-%20Project%20Preview/Create_Store_e60raf.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Login - Enter store
+![Preview-3](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700184/ChillAndShop%20-%20Project%20Preview/Login_cdh7ui.png)
 
-### `yarn build`
+Dashboard - Sidebar options  
+![Preview-4](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700084/ChillAndShop%20-%20Project%20Preview/Dashboard_z2ye1h.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+All products view
+![Preview-5](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700085/ChillAndShop%20-%20Project%20Preview/View_all_products_gaqdr7.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Search for a product
+![Preview-6](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700085/ChillAndShop%20-%20Project%20Preview/Search_for_Products_zu6umh.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Choose product quantity / Product added to the shopping cart
+![Preview-7](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700086/ChillAndShop%20-%20Project%20Preview/Add_product_and_product_added_to_shopping_cart_crudko.jpg)
 
-### `yarn eject`
+Shopping Cart view - Product details: price, quantity, subtotal, total of all products
+![Preview-8](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700085/ChillAndShop%20-%20Project%20Preview/Shopping_Cart_view_y5tm1a.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Shopping Cart product update - Updated product details: price, quantity, subtotal, total of all products
+![Preview-9](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700085/ChillAndShop%20-%20Project%20Preview/Update_Shopping_Cart_llqajn.png)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Inventory view
+![Preview-10](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700086/ChillAndShop%20-%20Project%20Preview/View_inventory_ochbp7.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Create multiple forms to add multiple products to inventory
+![Preview-11](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700085/ChillAndShop%20-%20Project%20Preview/Create_new_products_fwi6ip.png)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Products added to inventory - Cloudinary will store all product images
+![Preview-12](https://res.cloudinary.com/dloh9txdc/image/upload/v1613700085/ChillAndShop%20-%20Project%20Preview/Products_added_to_inventory_gx7uiu.png)
 
-## Learn More
+<br />
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Check out more features of this project here: [Demo walkthrough](link)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<br />
 
-### Code Splitting
+[Back To The Top](#chill-and-shop)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+---
 
-### Analyzing the Bundle Size
+## Description
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Users can create two different accounts. They can create a store (sellers) or just **Chill & Shop** (buyers). Store owners and buyers will have a dashboard to keep track of their purchases (buyers), products to be delivered(sellers), an archived of delivered products(sellers), and an overall stats of their earnings, expenses, and profits (sellers) delivered by graphics and chars (this is a stretch feature currently unavailable).
 
-### Making a Progressive Web App
+I'm excited to keep working on this project and expand its features and capabilities.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+#### Inspiration
 
-### Advanced Configuration
+This project was inspired on an application assessment for a backend internship role for [Shopify](shorturl.at/iCTY8). Unfortunately I could't complete all the requirements before submission but I decided to keep working on it to learn more about how to develop those specific features and challenge myself to finish, if not all, at least most of the requirements for the that assessment.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+[Back To The Top](#chill-and-shop)
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+## Installation
 
-### `yarn build` fails to minify
+#### [Chill & Shop - Frontend](https://github.com/mrdbrg/chill-and-shop-frontend)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. Fork this pository.
+1. Clone this repository onto your local machine.
+1. From your terminal `cd` into the project's folder.
+1. Run `npm install` to install all packages and dependencies.
+1. Follow the instructions for the [back-end portion](https://github.com/mrdbrg/chill-and-shop-backend) of this application.
+1. Run `npm start` to run the application.
+
+[Back To The Top](#chill-and-shop)
+
+---
+
+## References and Technologies
+
+#### Technologies
+
+- HTML
+- CSS
+- Javascript
+- [React](https://reactjs.org/)
+
+#### Libraries
+
+- [Semantic UI React](https://react.semantic-ui.com/)
+
+[Back To The Top](#chill-and-shop)
+
+---
+
+## License
+
+MIT License
+
+Copyright [2020] [Marlon Braga]
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE
+
+[Back To The Top](#chill-and-shop)
+
+---
+
+## Author Info
+
+- LinkedIn - [Marlon Braga](https://www.linkedin.com/in/marlon-braga/)
+- Portfolio - [Currently unavailable and under construction](https://www.youtube.com/watch?v=oHg5SJYRHA0&ab_channel=cotter548)
+
+[Back To The Top](#chill-and-shop)
