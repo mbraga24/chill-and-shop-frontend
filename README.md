@@ -69,7 +69,7 @@ I'm excited to keep working on this project and expand its features and capabili
 
 #### Inspiration
 
-This project was inspired on an application assessment for a backend internship role for [Shopify](shorturl.at/iCTY8). Unfortunately I could't complete all the requirements before submission but I decided to keep working on it to learn more about how to develop those specific features and challenge myself to finish, if not all, at least most of the requirements for the that assessment.
+This project was inspired on an application assessment for a backend internship role for [Shopify](shorturl.at/iCTY8). Unfortunately I could't complete all the requirements before submission but I decided to keep working on it to learn more about how to develop those specific features and challenge myself to finish, if not all, at least most of the requirements for the assessment.
 
 [Back To The Top](#chill-and-shop)
 
